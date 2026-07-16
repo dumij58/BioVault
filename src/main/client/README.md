@@ -1,0 +1,3 @@
+# BioVault: Research Sample and Biological Sequence Repository
+
+BioVault is a web-based research data management system designed to help researchers organize biological research projects, laboratory samples, and biological sequence records. The system provides a centralized platform for storing and managing research-related information while maintaining relationships between projects, researchers, samples, and DNA/RNA/protein sequences.
