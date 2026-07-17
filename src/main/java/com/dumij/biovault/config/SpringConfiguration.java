@@ -1,4 +1,4 @@
-package com.dumij.biovault;
+package com.dumij.biovault.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;

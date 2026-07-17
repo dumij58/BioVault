@@ -39,5 +39,9 @@ Thumbs.db
 ### Temporary files ###
 .output.txt
 
+### Environment files ###
+.env
+!.env.example
+
 ### Build Artifacts ###
 src/main/resources/static/
