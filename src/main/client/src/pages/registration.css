@@ -1,0 +1,168 @@
+.reg-container {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 7rem 1rem 4rem;
+}
+
+.Reg_container {
+    max-width: 425px;
+    margin: 0 auto;
+    background: rgba(10, 16, 40, 0.66);
+    border-radius: 24px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(181, 196, 255, 0.2);
+    backdrop-filter: blur(22px);
+    color: #edf2ff;
+    animation: regLift 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reg-container .form-title {
+    text-align: center;
+    font-size: 1.37rem;
+    font-weight: 800;
+    margin-bottom: 1.87rem;
+    color: #fff;
+}
+
+.reg-form .input-wrapper {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 1.2rem;
+}
+
+.reg-form .input-wrapper .input-field {
+    height: 100%;
+    width: 100%;
+    font-size: 1.06rem;
+    outline: none;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(181, 196, 255, 0.2);
+    padding: 0 1.25rem 0 3.12rem;
+    transition: 0.25s ease;
+    background: rgba(255, 255, 255, 0.08);
+    color: #edf2ff;
+}
+
+.reg-form .input-wrapper .input-field::placeholder {
+    color: rgba(237, 242, 255, 0.62);
+}
+
+.reg-form .input-wrapper .input-field:focus {
+    border-color: rgba(121, 168, 255, 0.9);
+    box-shadow: 0 0 0 3px rgba(95, 125, 255, 0.16);
+}
+
+.reg-form .input-wrapper i {
+    color: #bed0ff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.1rem;
+    pointer-events: none;
+    transition: 0.2s ease;
+    font-size: 1.3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reg-form .input-wrapper .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined', 'Segoe UI Symbol', sans-serif;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.reg-form .input-wrapper select.input-field {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23bed0ff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5rem;
+}
+
+.reg-form .input-wrapper select.input-field:invalid,
+.reg-form .input-wrapper select.input-field option[value=""] {
+    color: rgba(237, 242, 255, 0.62);
+}
+
+.reg-form .input-wrapper select.input-field option {
+    color: #000;
+}
+
+.reg-button {
+    width: 100%;
+    height: 54px;
+    font-size: 1rem;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 0.8rem;
+    background: linear-gradient(135deg, #6e8cff, #5f41e4);
+    transition: 0.25s ease;
+    cursor: pointer;
+    margin-top: 2.19rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 18px 32px rgba(42, 61, 147, 0.36);
+}
+
+.reg-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 36px rgba(42, 61, 147, 0.42);
+}
+
+.reg-container .signup-text,
+.reg-container .back-home-text {
+    text-align: center;
+    font-weight: 500;
+    margin: 1.75rem 0 0.31rem;
+    color: rgba(237, 242, 255, 0.82);
+}
+
+.reg-container .back-home-text {
+    margin-top: 1rem;
+}
+
+.reg-container a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #9eb8ff;
+}
+
+.reg-container a:hover {
+    text-decoration: underline;
+}
+
+.text-link-button {
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 0;
+    color: #9eb8ff;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.text-link-button:hover {
+    text-decoration: underline;
+}
+
+@keyframes regLift {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

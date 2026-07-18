@@ -1,0 +1,233 @@
+.home {
+    display: grid;
+    gap: 1.25rem;
+    min-height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.home__topbar {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid rgba(181, 196, 255, 0.15);
+    border-radius: 20px;
+    background: rgba(10, 16, 40, 0.72);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
+.home__brand {
+    margin: 0;
+    font-size: 64px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.home__brand-copy,
+.home__eyebrow,
+.home__lead,
+.home__feature-card p,
+.home__feature-card span,
+.home__highlight-card p,
+.home__stats span 
+{
+    color: rgba(237, 242, 255, 0.72);
+}
+
+.home__brand-copy {
+    display: block;
+    margin-top: 1.50rem;
+    font-size: 0.88rem;
+}
+
+.home__nav-actions,
+.home__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.home__ghost-button,
+.home__primary-button {
+    border: 1px solid rgba(181, 196, 255, 0.18);
+    border-radius: 14px;
+    padding: 0.85rem 1.15rem;
+    font: inherit;
+    cursor: pointer;
+    transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.home__ghost-button {
+    background: rgba(255, 255, 255, 0.08);
+    color: #edf2ff;
+}
+
+.home__primary-button {
+    background: linear-gradient(135deg, #6e8cff, #5f41e4);
+    color: #fff;
+    box-shadow: 0 18px 32px rgba(42, 61, 147, 0.3);
+}
+
+.home__ghost-button:hover,
+.home__primary-button:hover {
+    transform: translateY(-1px);
+}
+
+.home__ghost-button:hover {
+    background: rgba(95, 125, 255, 0.18);
+}
+
+.home__primary-button:hover {
+    box-shadow: 0 22px 36px rgba(42, 61, 147, 0.4);
+}
+
+.home__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 1rem;
+    align-items: stretch;
+}
+
+.home__hero-copy,
+.home__feature-panel,
+.home__highlight-card {
+    border: 1px solid rgba(181, 196, 255, 0.14);
+    border-radius: 24px;
+    background: rgba(10, 16, 40, 0.56);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(18px);
+}
+
+.home__hero-copy {
+    padding: 2rem;
+    display: grid;
+    gap: 1.25rem;
+}
+
+.home__eyebrow,.home__feature-card h2 {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.76rem;
+    color: #9eb8ff;
+}
+
+
+.home__hero-copy h1,
+.home__highlight-card h3 {
+    margin: 0;
+}
+
+.home__hero-copy h1 {
+    font-size: clamp(2rem, 3.5vw, 2.3rem);
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.25;
+    max-width: 100%;
+    margin: 0;
+}
+
+.home__lead {
+    margin: 0;
+    max-width: 58ch;
+    font-size: 1.02rem;
+    line-height: 1.7;
+}
+
+.home__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.home__stats article,
+.home__feature-card,
+.home__highlight-card {
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(181, 196, 255, 0.1);
+}
+
+.home__stats article {
+    padding: 0.95rem 1rem;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.home__stats strong {
+    font-size: 1rem;
+}
+
+.home__feature-panel {
+    padding: 1rem;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.home__feature-card {
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.home__feature-card p,
+.home__highlight-card p {
+    margin: 0;
+}
+
+.home__feature-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.55rem;
+    color: rgba(237, 242, 255, 0.86);
+}
+
+.home__feature-card--soft {
+    background: rgba(95, 125, 255, 0.14);
+}
+
+.home__highlights {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.home__highlight-card {
+    padding: 1.1rem 1.15rem;
+    display: grid;
+    gap: 0.45rem;
+}
+
+@media (max-width: 1100px) {
+    .home__hero,
+    .home__highlights,
+    .home__stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .home {
+        padding: 0.75rem;
+    }
+
+    .home__topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .home__hero-copy {
+        padding: 1.35rem;
+    }
+
+    .home__hero-copy h1 {
+        max-width: none;
+    }
+}
