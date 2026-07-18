@@ -1,6 +1,10 @@
 import {useEffect, useState} from 'react'
 import { Env } from "./Env";
 import './App.css'
+import Home from './pages/home'
+import Auth from './pages/auth'
+import Registration from './pages/registration'
+
 
 function App() {
 
@@ -10,12 +14,42 @@ function App() {
         .then(body => console.log(body));
   }, []);
 
+  const [page, setPage] = useState('home');
+
+  const navigateTo = (nextPage) => {
+    if (nextPage === page) {
+      return;
+    }
+
+    setPage(nextPage);
+  };
+
   return (
-    <>
-      <h1>BioVault</h1>
-      <h3>Research Sample and Biological Sequence Repository</h3>
-    </>
-  )
+    <div className="app-shell">
+      <main className={`page-shell page-shell--${page}`}>
+        {page === 'home' && (
+          <Home
+            onLoginClick={() => navigateTo('auth')}
+            onRegisterClick={() => navigateTo('registration')}
+          />
+        )}
+        {page === 'auth' && (
+          <Auth
+            onGoHome={() => navigateTo('home')}
+            onGoRegistration={() => navigateTo('registration')}
+          />
+        )}
+        {page === 'registration' && (
+          <Registration
+            onGoHome={() => navigateTo('home')}
+            onGoLogin={() => navigateTo('auth')}
+          />
+        )}
+        
+      </main>
+    </div>
+  );
 }
+
 
 export default App
