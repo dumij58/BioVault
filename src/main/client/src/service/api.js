@@ -1,4 +1,4 @@
-import { Env } from "../config/env";
+import { Env } from "../config/Env";
 import { parsePingResponse } from "../models/ping";
 
 export async function pingApi() {

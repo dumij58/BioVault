@@ -1,19 +1,11 @@
-import {useEffect, useState} from 'react'
-import { Env } from "./Env";
+import { useState } from 'react'
 import './App.css'
-import Home from './pages/home'
-import Auth from './pages/auth'
-import Registration from './pages/registration'
+import Home from '../pages/home'
+import Auth from '../pages/auth'
+import Registration from '../pages/registration'
 
 
-function App() {
-
-  useEffect(() => {
-    fetch(`${Env.API_BASE_URL}/ping`)
-        .then(response => response.text())
-        .then(body => console.log(body));
-  }, []);
-
+export function App() {
   const [page, setPage] = useState('home');
 
   const navigateTo = (nextPage) => {
@@ -50,6 +42,3 @@ function App() {
     </div>
   );
 }
-
-
-export default App
