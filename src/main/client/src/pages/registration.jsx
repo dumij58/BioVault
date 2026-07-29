@@ -1,18 +1,9 @@
-import { useEffect } from 'react';
-import './registration.css';
 import { useState } from 'react';
+import './registration.css';
 
 
 function Registration({ onGoHome, onGoLogin }) {
     
-    useEffect(() => {
-        document.body.style.backgroundColor = '';
-        document.body.style.display = '';
-        document.body.style.alignItems = '';
-        document.body.style.justifyContent = '';
-        document.body.style.minHeight = '';
-    }, []);
-
     const handleRegister = (e) => {
         e.preventDefault();
         alert('Registration Successful! Redirecting to login.');
