@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { pingApi } from "../services/api";
+import { pingApi } from "../service/api";
 
 export function useHomeController() {
     const [pingMessage, setPingMessage] = useState("Loading API status...");
