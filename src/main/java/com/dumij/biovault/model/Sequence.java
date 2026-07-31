@@ -37,9 +37,4 @@ public class Sequence {
     //public SequenceType getSeqType() {
     //    return seqType;
     //}
-
-    // Setup later
-    public Long calculateLength() {
-        return null;
-    }
 }

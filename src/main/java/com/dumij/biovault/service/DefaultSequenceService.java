@@ -59,4 +59,23 @@ public class DefaultSequenceService implements SequenceService {
     public CalcLengthResponse calcSeqLength(CalcLengthRequest request) {
         return new CalcLengthResponse(sequenceMapper.toLength(request));
     }
+
+    @Override
+    public SequenceDetailResponse updateSeq(String id, SaveSequenceRequest request) {
+        Sequence existing = sequenceRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Sequence not found: " + id));
+
+        if (request.sequence() != null) {
+            existing.setSequence(request.sequence());
+        }
+
+        if (request.seqLength() != null) {
+            existing.setSeqLength(request.seqLength());
+        } else if (request.sequence() != null) {
+            existing.setSeqLength((long) request.sequence().length());
+        }
+
+        Sequence updated = sequenceRepository.save(existing);
+        return sequenceMapper.toDetailResponse(updated);
+    }
 }

@@ -18,4 +18,6 @@ public interface SequenceService {
     SequenceDetailResponse getSequenceById(String id);
 
     CalcLengthResponse calcSeqLength(CalcLengthRequest request);
+
+    SequenceDetailResponse updateSeq(String id, SaveSequenceRequest request);
 }
