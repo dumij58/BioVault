@@ -1,6 +1,6 @@
 import './home.css';
 
-function Home({ onLoginClick, onRegisterClick }) {
+function Home({ onLoginClick, onRegisterClick, onSequenceClick }) {
   return (
     <section className="home">
       <header className="home__topbar">
@@ -10,6 +10,7 @@ function Home({ onLoginClick, onRegisterClick }) {
         </div>
 
         <div className="home__nav-actions">
+          <button type="button" className="home__ghost-button" onClick={onSequenceClick}>Sequence Console</button>
           <button type="button" className="home__ghost-button" onClick={onLoginClick}>Login</button>
           <button type="button" className="home__primary-button" onClick={onRegisterClick}>Register</button>
         </div>
@@ -24,6 +25,7 @@ function Home({ onLoginClick, onRegisterClick }) {
           </p>
 
           <div className="home__cta-row">
+            <button type="button" className="home__ghost-button" onClick={onSequenceClick}>Open Sequence Console</button>
             <button type="button" className="home__primary-button" onClick={onLoginClick}>Login</button>
             <button type="button" className="home__ghost-button" onClick={onRegisterClick}>Register</button>
           </div>

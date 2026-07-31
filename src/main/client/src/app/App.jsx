@@ -3,6 +3,7 @@ import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
+import Sequence from '../pages/sequence'
 
 
 export function App() {
@@ -23,18 +24,25 @@ export function App() {
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
+            onSequenceClick={() => navigateTo('sequence')}
           />
         )}
         {page === 'auth' && (
           <Auth
             onGoHome={() => navigateTo('home')}
             onGoRegistration={() => navigateTo('registration')}
+            onGoSequence={() => navigateTo('sequence')}
           />
         )}
         {page === 'registration' && (
           <Registration
             onGoHome={() => navigateTo('home')}
             onGoLogin={() => navigateTo('auth')}
+          />
+        )}
+        {page === 'sequence' && (
+          <Sequence
+            onGoHome={() => navigateTo('home')}
           />
         )}
         
