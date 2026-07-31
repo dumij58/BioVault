@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Login from './login';
 import './login.css';
 
@@ -8,14 +8,6 @@ function Auth({ onGoHome, onGoRegistration }) {
     const [password, setPassword] = useState('');
     const [userRole, setUserRole] = useState('guest');
     const [errorMessage, setErrorMessage] = useState('');
-
-    useEffect(() => {
-        document.body.style.backgroundColor = '';
-        document.body.style.display = '';
-        document.body.style.alignItems = '';
-        document.body.style.justifyContent = '';
-        document.body.style.minHeight = '';
-    }, []);
 
     const credentials = {
         student: { email: 'student@school.com', password: 'student123' },
@@ -46,11 +38,41 @@ function Auth({ onGoHome, onGoRegistration }) {
     };
 
     if (userRole === 'student') {
-        return <Student onLogout={handleLogout} />;
+        return (
+            <div style={{ padding: '2rem', textAlign: 'center', color: '#fff' }}>
+                <h1>🎓 Student Dashboard</h1>
+                <p>Your research samples and sequences will appear here.</p>
+                <button
+                    onClick={handleLogout}
+                    style={{
+                        marginTop: '1.5rem', padding: '0.75rem 2rem',
+                        background: '#5F41E4', color: '#fff', border: 'none',
+                        borderRadius: '8px', fontSize: '1rem', cursor: 'pointer'
+                    }}
+                >
+                    Logout
+                </button>
+            </div>
+        );
     }
 
     if (userRole === 'manager') {
-        return <LabManager onLogout={handleLogout} />;
+        return (
+            <div style={{ padding: '2rem', textAlign: 'center', color: '#fff' }}>
+                <h1>🔬 Lab Manager Dashboard</h1>
+                <p>Manage laboratory samples, sequences, and researcher access here.</p>
+                <button
+                    onClick={handleLogout}
+                    style={{
+                        marginTop: '1.5rem', padding: '0.75rem 2rem',
+                        background: '#5F41E4', color: '#fff', border: 'none',
+                        borderRadius: '8px', fontSize: '1rem', cursor: 'pointer'
+                    }}
+                >
+                    Logout
+                </button>
+            </div>
+        );
     }
 
     if (userRole === 'admin') {
