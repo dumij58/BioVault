@@ -18,45 +18,30 @@ public class SampleService {
         this.sampleRepository = sampleRepository;
     }
 
-    // Get all samples
     public List<Sample> getAllSamples() {
         return sampleRepository.findAll();
     }
 
-    // Get sample by ID
-    public Optional<Sample> getSampleById(Long id) {
+    public Optional<Sample> getSampleById(String id) {
         return sampleRepository.findById(id);
     }
 
-    // Save/Register new sample
-    public Sample saveSample(Sample sample) {
+    public Sample createSample(Sample sample) {
         return sampleRepository.save(sample);
     }
 
-    // Update existing sample
-    public Sample updateSample(Long id, Sample updatedSample) {
+    public Sample updateSample(String id, Sample updatedSample) {
         return sampleRepository.findById(id).map(sample -> {
+            sample.setName(updatedSample.getName());
             sample.setSpecies(updatedSample.getSpecies());
-            sample.setSampleType(updatedSample.getSampleType());
-            sample.setCollectionDate(updatedSample.getCollectionDate());
             sample.setProjectId(updatedSample.getProjectId());
+            sample.setCollectionDate(updatedSample.getCollectionDate());
             sample.setStorageLocationId(updatedSample.getStorageLocationId());
             return sampleRepository.save(sample);
-        }).orElseThrow(() -> new RuntimeException("Sample not found with id " + id));
+        }).orElseThrow(() -> new RuntimeException("Sample not found with id: " + id));
     }
 
-    // Delete sample
-    public void deleteSample(Long id) {
+    public void deleteSample(String id) {
         sampleRepository.deleteById(id);
-    }
-
-    // Search by species
-    public List<Sample> searchBySpecies(String species) {
-        return sampleRepository.findBySpeciesContainingIgnoreCase(species);
-    }
-
-    // Filter by project ID
-    public List<Sample> getSamplesByProject(Long projectId) {
-        return sampleRepository.findByProjectId(projectId);
     }
 }

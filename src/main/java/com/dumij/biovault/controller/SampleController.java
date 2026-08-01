@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/samples")
-@CrossOrigin(origins = "*")
 public class SampleController {
 
     private final SampleService sampleService;
@@ -22,54 +21,32 @@ public class SampleController {
         this.sampleService = sampleService;
     }
 
-    // Get all samples
     @GetMapping
     public ResponseEntity<List<Sample>> getAllSamples() {
         return ResponseEntity.ok(sampleService.getAllSamples());
     }
 
-    // Get single sample by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Sample> getSampleById(@PathVariable Long id) {
+    public ResponseEntity<Sample> getSampleById(@PathVariable String id) {
         return sampleService.getSampleById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Register a new sample
     @PostMapping
     public ResponseEntity<Sample> createSample(@Valid @RequestBody Sample sample) {
-        Sample createdSample = sampleService.saveSample(sample);
-        return new ResponseEntity<>(createdSample, HttpStatus.CREATED);
+        Sample created = sampleService.createSample(sample);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // Update an existing sample
     @PutMapping("/{id}")
-    public ResponseEntity<Sample> updateSample(@PathVariable Long id, @Valid @RequestBody Sample sample) {
-        try {
-            Sample updatedSample = sampleService.updateSample(id, sample);
-            return ResponseEntity.ok(updatedSample);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Sample> updateSample(@PathVariable String id, @Valid @RequestBody Sample sample) {
+        return ResponseEntity.ok(sampleService.updateSample(id, sample));
     }
 
-    // Delete a sample
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSample(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSample(@PathVariable String id) {
         sampleService.deleteSample(id);
         return ResponseEntity.noContent().build();
-    }
-
-    // Search samples by species
-    @GetMapping("/search")
-    public ResponseEntity<List<Sample>> searchBySpecies(@RequestParam String species) {
-        return ResponseEntity.ok(sampleService.searchBySpecies(species));
-    }
-
-    // Filter samples by project
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Sample>> getSamplesByProject(@PathVariable Long projectId) {
-        return ResponseEntity.ok(sampleService.getSamplesByProject(projectId));
     }
 }
