@@ -2,7 +2,6 @@ package com.dumij.biovault.controller;
 
 import com.dumij.biovault.model.Institution;
 import com.dumij.biovault.service.InstitutionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class InstitutionController {
 
-    @Autowired
-    private InstitutionService service;
+    private final InstitutionService service;
+
+    InstitutionController(InstitutionService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public Institution createInstitution(@RequestBody Institution institution) {

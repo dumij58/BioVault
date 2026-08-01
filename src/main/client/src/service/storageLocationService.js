@@ -1,12 +1,11 @@
-const API_URL = "http://localhost:8080/api/storage-locations";
+import { Env } from "../config/Env";
 
+const API_URL = Env.API_BASE_URL + "/storage-locations";
 
 const authHeader = {
     "Authorization": "Basic " + btoa("admin:admin123"),
     "Content-Type": "application/json"
 };
-
-
 
 export const getStorageLocations = async () => {
 

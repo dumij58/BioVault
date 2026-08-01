@@ -2,13 +2,9 @@ package com.dumij.biovault.controller;
 
 import com.dumij.biovault.model.ResearchProject;
 import com.dumij.biovault.service.ResearchProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-//This receives HTTP requests
 @RestController
 @RequestMapping("api/v1/research_projects")
 @CrossOrigin(origins = "*")

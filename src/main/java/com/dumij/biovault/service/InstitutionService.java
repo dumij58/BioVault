@@ -2,7 +2,6 @@ package com.dumij.biovault.service;
 
 import com.dumij.biovault.model.Institution;
 import com.dumij.biovault.repository.InstitutionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class InstitutionService {
 
-    @Autowired
-    private InstitutionRepository repository;
+    private final InstitutionRepository repository;
+
+    InstitutionService(InstitutionRepository repository) {
+        this.repository = repository;
+    }
 
     public Institution createInstitution(Institution institution) {
         return repository.save(institution);

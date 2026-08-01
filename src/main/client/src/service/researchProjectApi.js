@@ -1,5 +1,3 @@
-//client/src/service/researchProjectApi.js
-
 import { Env } from "../config/Env";
 
 const API_BASE_URL = Env.API_BASE_URL;

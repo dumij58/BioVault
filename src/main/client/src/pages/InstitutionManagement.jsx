@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Env } from "../config/Env";
 
-export default function InstitutionManagement() {
+const API_URL = Env.API_BASE_URL + "/institutions";
+
+export default function InstitutionManagement({ onGoHome }) {
     const [institutions, setInstitutions] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
@@ -8,8 +11,6 @@ export default function InstitutionManagement() {
         address: '',
         contactInformation: ''
     });
-
-    const API_URL = 'http://localhost:8080/api/v1/institutions';
 
     // READ
     const fetchInstitutions = async () => {
@@ -70,6 +71,13 @@ export default function InstitutionManagement() {
             <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', color: '#ffffff' }}>
                 Institution Management
             </h2>
+
+            <button
+                    className="back-btn"
+                    onClick={onGoHome}
+                >
+                    ← Back to Home
+            </button>
 
             {/* FORM CARD (DARK THEME) */}
             <form onSubmit={handleSubmit} style={{ backgroundColor: '#1e293b', padding: '24px', borderRadius: '12px', border: '1px solid #334155', marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>

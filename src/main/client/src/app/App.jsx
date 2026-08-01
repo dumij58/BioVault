@@ -3,13 +3,12 @@ import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
-
 import InstitutionManagement from '../pages/InstitutionManagement'
 import StorageLocation from "../pages/storageLocation"
 import ResearchProjectPage from "../pages/ResearchProjectPage"
 
 export function App() {
-  const [page, setPage] = useState('institutions');
+  const [page, setPage] = useState('home');
 
   const navigateTo = (nextPage) => {
     if (nextPage === page) {
@@ -21,29 +20,25 @@ export function App() {
 
   return (
     <div className="app-shell">
-      {/* QUICK NAV BAR FOR ALL MODULES */}
-      <nav style={{ padding: '10px 20px', backgroundColor: '#1e293b', display: 'flex', gap: '15px' }}>
-        <button onClick={() => navigateTo('home')} style={{ padding: '6px 12px', cursor: 'pointer' }}>Home</button>
-        <button onClick={() => navigateTo('institutions')} style={{ padding: '6px 12px', cursor: 'pointer', fontWeight: 'bold' }}>Institution Management</button>
-        <button onClick={() => navigateTo('storageLocation')} style={{ padding: '6px 12px', cursor: 'pointer' }}>Storage Location</button>
-        <button onClick={() => navigateTo('projects')} style={{ padding: '6px 12px', cursor: 'pointer' }}>Projects</button>
-      </nav>
-
       <main className={`page-shell page-shell--${page}`}>
+
         {page === 'home' && (
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
-            onStorageClick={() => navigateTo('storageLocation')}
+            onInstitutionsClick={() => navigateTo("institutions")}
             onProjectsClick={() => navigateTo("projects")}
+            onStorageClick={() => navigateTo('storageLocation')}
           />
         )}
+
         {page === 'auth' && (
           <Auth
             onGoHome={() => navigateTo('home')}
             onGoRegistration={() => navigateTo('registration')}
           />
         )}
+
         {page === 'registration' && (
           <Registration
             onGoHome={() => navigateTo('home')}
@@ -51,22 +46,24 @@ export function App() {
           />
         )}
 
-        {/* YOUR MODULE */}
         {page === 'institutions' && (
-          <InstitutionManagement />
-        )}
-
-        {/* TEAMMATES' MODULES */}
-        {page === 'storageLocation' && (
-          <StorageLocation
+          <InstitutionManagement 
             onGoHome={() => navigateTo('home')}
           />
         )}
+
         {page === 'projects' && (
           <ResearchProjectPage
             onGoHome={() => navigateTo('home')}
           />
         )}
+        
+        {page === 'storageLocation' && (
+          <StorageLocation
+            onGoHome={() => navigateTo('home')}
+          />
+        )}
+        
 
       </main>
     </div>

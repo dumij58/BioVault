@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/storage-locations")
+@RequestMapping("/api/v1/storage-locations")
 @CrossOrigin(origins = "*")
 public class StorageLocationController {
 

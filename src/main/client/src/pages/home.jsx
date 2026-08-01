@@ -1,6 +1,6 @@
 import './home.css';
 
-function Home({ onLoginClick, onRegisterClick,onStorageClick,onProjectsClick }) {
+function Home({ onLoginClick, onRegisterClick, onStorageClick, onProjectsClick, onInstitutionsClick }) {
   return (
     <section className="home">
       <header className="home__topbar">
@@ -9,6 +9,11 @@ function Home({ onLoginClick, onRegisterClick,onStorageClick,onProjectsClick }) 
           <span className="home__brand-copy">Research Sample and Biological Sequence Repository.</span>
         </div>
 
+        <div className="home__nav-actions">
+          <button type="button" className="home__ghost-button" onClick={onInstitutionsClick}>Institutions</button>
+          <button type="button" className="home__ghost-button" onClick={onProjectsClick}>Research Projects</button>
+          <button type="button" className="home__ghost-button" onClick={onStorageClick}>Storage Locations</button>
+        </div>
         <div className="home__nav-actions">
           <button type="button" className="home__ghost-button" onClick={onLoginClick}>Login</button>
           <button type="button" className="home__primary-button" onClick={onRegisterClick}>Register</button>
@@ -26,8 +31,6 @@ function Home({ onLoginClick, onRegisterClick,onStorageClick,onProjectsClick }) 
           <div className="home__cta-row">
             <button type="button" className="home__primary-button" onClick={onLoginClick}>Login</button>
             <button type="button" className="home__ghost-button" onClick={onRegisterClick}>Register</button>
-            <button type="button" className="home__projects-button" onClick={onProjectsClick}>View Research Projects</button>
-            <button type="button" className="home__primary-button" onClick={onStorageClick}>View Storage Locations</button>
 
           </div>
 
