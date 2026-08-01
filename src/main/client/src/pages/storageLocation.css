@@ -1,0 +1,103 @@
+.storage-page{
+    max-width:900px;
+    margin:40px auto;
+    padding:30px;
+}
+
+.storage-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.storage-header h1{
+    color:#0d5c63;
+}
+
+.storage-form-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.storage-form{
+    display:grid;
+    gap:15px;
+}
+
+.storage-form input{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.submit-btn,
+.view-btn,
+.back-btn,
+.edit-btn,
+.delete-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.submit-btn{
+    background:#0d5c63;
+    color:white;
+}
+
+.view-btn{
+    background-color:#0d6efd;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.view-btn:hover{
+    background-color:#0b5ed7;
+}
+
+.back-btn{
+    background:#6c757d;
+    color:white;
+    margin-bottom:20px;
+}
+
+.edit-btn{
+    background:#ffc107;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+}
+
+.storage-actions{
+    margin:25px 0;
+    text-align:center;
+}
+
+.storage-list{
+    display:grid;
+    gap:20px;
+}
+
+.storage-card{
+    background:#eef8f6;
+    color:#333;
+    padding:20px;
+    border-radius:12px;
+    border:1px solid #cfe8e3;
+}
+
+.button-group{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
