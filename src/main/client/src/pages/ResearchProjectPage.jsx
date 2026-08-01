@@ -8,7 +8,7 @@ import ResearchProjectDelete from '../components/researchProject/ResearchProject
 import { researchProjectApi } from '../service/researchProjectApi';
 import './ResearchProjectPage.css';
 
-const ResearchProjectPage = () => {
+const ResearchProjectPage = ({ onGoHome }) => {
     const [view, setView] = useState('list');
     const [selectedProject, setSelectedProject] = useState(null);
     const [refreshKey, setRefreshKey] = useState(0);
@@ -97,9 +97,16 @@ const ResearchProjectPage = () => {
             default:
                 return (
                     <>
-                        {/* add new css classes */}
                         <div className="research-projects-header">
                             <div className="research-projects-header-left">
+                                {/* ADD BACK BUTTON */}
+                                <button
+                                    className="back-button"
+                                    onClick={onGoHome}
+                                    title="Go back to Home"
+                                >
+                                    ← Back to Home
+                                </button>
                                 <h1 className="research-projects-title">Research Projects</h1>
                             </div>
                             <button
@@ -121,7 +128,7 @@ const ResearchProjectPage = () => {
     };
 
     return (
-        <div className="research-projects-container container mx-auto px-4 py-8">
+        <div className="research-projects-container">
             {renderContent()}
         </div>
     );
