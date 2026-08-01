@@ -1,7 +1,7 @@
 // client/src/components/researchProject/ResearchProjectForm.jsx
 
 import React, { useState, useEffect } from 'react';
-
+import '../../pages/ResearchProjectPage.css';
 const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
     const [formData, setFormData] = useState({
         title: '',
@@ -56,15 +56,15 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-4">
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 form-container">
+            <h2 className="text-2xl font-bold mb-4 form-title">
                 {isEditing ? 'Edit Project' : 'Create New Project'}
             </h2>
 
             <div className="space-y-4">
                 {/* Title */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         Title *
                     </label>
                     <input
@@ -72,19 +72,17 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                            errors.title ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`form-input ${errors.title ? 'form-input-error' : ''}`}
                         placeholder="Enter project title"
                     />
                     {errors.title && (
-                        <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+                        <p className="form-error">{errors.title}</p>
                     )}
                 </div>
 
                 {/* Description */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         Description *
                     </label>
                     <textarea
@@ -92,19 +90,17 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                         value={formData.description}
                         onChange={handleChange}
                         rows={3}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                            errors.description ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`form-input ${errors.description ? 'form-input-error' : ''}`}
                         placeholder="Enter project description"
                     />
                     {errors.description && (
-                        <p className="text-red-500 text-sm mt-1">{errors.description}</p>
+                        <p className="form-error">{errors.description}</p>
                     )}
                 </div>
 
                 {/* Start Date */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         Start Date *
                     </label>
                     <input
@@ -112,18 +108,16 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                         name="startDate"
                         value={formData.startDate}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                            errors.startDate ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`form-input ${errors.startDate ? 'form-input-error' : ''}`}
                     />
                     {errors.startDate && (
-                        <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
+                        <p className="form-error">{errors.startDate}</p>
                     )}
                 </div>
 
                 {/* End Date */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         End Date
                     </label>
                     <input
@@ -131,20 +125,20 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                         name="endDate"
                         value={formData.endDate}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="form-input"
                     />
                 </div>
 
                 {/* Status */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         Status
                     </label>
                     <select
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="form-input"
                     >
                         <option value="Active">Active</option>
                         <option value="Ongoing">Ongoing</option>
@@ -155,8 +149,8 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                 </div>
 
                 {/* Principal Researcher ID */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="form-group">
+                    <label className="form-label">
                         Principal Researcher ID *
                     </label>
                     <input
@@ -164,29 +158,27 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                         name="principalResearcherId"
                         value={formData.principalResearcherId}
                         onChange={handleChange}
-                        className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                            errors.principalResearcherId ? 'border-red-500' : 'border-gray-300'
-                        }`}
+                        className={`form-input ${errors.principalResearcherId ? 'form-input-error' : ''}`}
                         placeholder="Enter researcher ID"
                     />
                     {errors.principalResearcherId && (
-                        <p className="text-red-500 text-sm mt-1">{errors.principalResearcherId}</p>
+                        <p className="form-error">{errors.principalResearcherId}</p>
                     )}
                 </div>
             </div>
 
             {/* Buttons */}
-            <div className="flex gap-3 mt-6">
+            <div className="form-actions">
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                    className="form-submit"
                 >
                     {isEditing ? 'Update' : 'Create'}
                 </button>
                 <button
                     type="button"
                     onClick={onCancel}
-                    className="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400 transition-colors"
+                    className="form-cancel"
                 >
                     Cancel
                 </button>

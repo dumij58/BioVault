@@ -7,6 +7,7 @@ import ResearchProjectDetail from '../components/researchProject/ResearchProject
 import ResearchProjectDelete from '../components/researchProject/ResearchProjectDelete';
 import { researchProjectApi } from '../service/researchProjectApi';
 import './ResearchProjectPage.css';
+
 const ResearchProjectPage = () => {
     const [view, setView] = useState('list');
     const [selectedProject, setSelectedProject] = useState(null);
@@ -95,14 +96,17 @@ const ResearchProjectPage = () => {
                 );
             default:
                 return (
-                    <div>
-                        <div className="flex justify-between items-center mb-6">
-                            <h1 className="text-3xl font-bold">Research Projects</h1>
+                    <>
+                        {/* add new css classes */}
+                        <div className="research-projects-header">
+                            <div className="research-projects-header-left">
+                                <h1 className="research-projects-title">Research Projects</h1>
+                            </div>
                             <button
                                 onClick={handleCreate}
-                                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+                                className="create-button"
                             >
-                                + New Project
+                                New Project
                             </button>
                         </div>
                         <ResearchProjectList
@@ -111,13 +115,13 @@ const ResearchProjectPage = () => {
                             onDelete={handleDelete}
                             onView={handleView}
                         />
-                    </div>
+                    </>
                 );
         }
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="research-projects-container container mx-auto px-4 py-8">
             {renderContent()}
         </div>
     );
