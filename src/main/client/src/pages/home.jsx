@@ -1,6 +1,6 @@
 import './home.css';
 
-function Home({ onLoginClick, onRegisterClick,onStorageClick }) {
+function Home({ onLoginClick, onRegisterClick,onStorageClick,onProjectsClick }) {
   return (
     <section className="home">
       <header className="home__topbar">
@@ -26,11 +26,9 @@ function Home({ onLoginClick, onRegisterClick,onStorageClick }) {
           <div className="home__cta-row">
             <button type="button" className="home__primary-button" onClick={onLoginClick}>Login</button>
             <button type="button" className="home__ghost-button" onClick={onRegisterClick}>Register</button>
-              <button
-                  type="button"
-                  onClick={onStorageClick}>
-                  View Storage Locations
-              </button>
+            <button type="button" className="home__projects-button" onClick={onProjectsClick}>View Research Projects</button>
+            <button type="button" className="home__primary-button" onClick={onStorageClick}>View Storage Locations</button>
+
           </div>
 
           <div className="home__stats">

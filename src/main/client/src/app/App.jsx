@@ -4,6 +4,7 @@ import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
 import StorageLocation from "../pages/storageLocation";
+import ResearchProjectPage from "../pages/ResearchProjectPage";
 
 export function App() {
   const [page, setPage] = useState('home');
@@ -23,6 +24,8 @@ export function App() {
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onProjectsClick={() => navigateTo("projects")}
           />
         )}
         {page === 'auth' && (
@@ -39,6 +42,11 @@ export function App() {
         )}
         {page === 'storageLocation' && (
             <StorageLocation
+                onGoHome={() => navigateTo('home')}
+            />
+        )}
+        {page === 'projects' && (
+            <ResearchProjectPage
                 onGoHome={() => navigateTo('home')}
             />
         )}
