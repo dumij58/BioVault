@@ -3,6 +3,7 @@ import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
+import ResearchProjectPage from '../pages/ResearchProjectPage'
 
 
 export function App() {
@@ -36,6 +37,11 @@ export function App() {
             onGoHome={() => navigateTo('home')}
             onGoLogin={() => navigateTo('auth')}
           />
+        )}
+        {page === 'projects' && (
+            <ResearchProjectPage
+                onGoHome={() => navigateTo('home')}
+            />
         )}
         
       </main>
