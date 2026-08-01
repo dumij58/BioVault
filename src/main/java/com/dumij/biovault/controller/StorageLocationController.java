@@ -17,25 +17,25 @@ public class StorageLocationController {
         this.service = service;
     }
 
-    // Create a storage location
+    // Create
     @PostMapping
     public StorageLocation createLocation(@RequestBody StorageLocation location) {
         return service.saveLocation(location);
     }
 
-    // Get all storage locations
+    // Get all
     @GetMapping
     public List<StorageLocation> getAllLocations() {
         return service.getAllLocations();
     }
 
-    // Get one storage location
+    // Get one
     @GetMapping("/{id}")
     public StorageLocation getLocation(@PathVariable String id) {
         return service.getLocationById(id);
     }
 
-    // Update a storage location
+    // Update
     @PutMapping("/{id}")
     public StorageLocation updateLocation(@PathVariable String id,
                                           @RequestBody StorageLocation location) {
@@ -43,7 +43,7 @@ public class StorageLocationController {
         return service.updateLocation(location);
     }
 
-    // Delete a storage location
+    // Delete
     @DeleteMapping("/{id}")
     public void deleteLocation(@PathVariable String id) {
         service.deleteLocation(id);

@@ -15,27 +15,27 @@ public class StorageLocationService {
         this.repository = repository;
     }
 
-    // Add a storage location
+    // Add
     public StorageLocation saveLocation(StorageLocation location) {
         return repository.save(location);
     }
 
-    // Get all storage locations
+    // Get all
     public List<StorageLocation> getAllLocations() {
         return repository.findAll();
     }
 
-    // Get one location by ID
+    // Get one
     public StorageLocation getLocationById(String id) {
         return repository.findById(id).orElse(null);
     }
 
-    // Update a location
+    // Update
     public StorageLocation updateLocation(StorageLocation location) {
         return repository.save(location);
     }
 
-    // Delete a location
+    // Delete
     public void deleteLocation(String id) {
         repository.deleteById(id);
     }
