@@ -10,7 +10,7 @@ import java.util.List;
 
 //This receives HTTP requests
 @RestController
-@RequestMapping("/api/v1/research_projects")
+@RequestMapping("api/v1/research_projects")
 @CrossOrigin(origins = "*")
 public class ResearchProjectController {
     private final ResearchProjectService researchProjectService;

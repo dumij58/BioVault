@@ -1,10 +1,9 @@
-// client/src/service/researchProjectApi.js
+//client/src/service/researchProjectApi.js
 
 import { Env } from "../config/Env";
 
 const API_BASE_URL = Env.API_BASE_URL;
 
-// ============ RESEARCH PROJECT APIs ============
 export const researchProjectApi = {
     // Get all projects
     getAll: async () => {

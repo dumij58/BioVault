@@ -6,7 +6,7 @@ import ResearchProjectForm from '../components/researchProject/ResearchProjectFo
 import ResearchProjectDetail from '../components/researchProject/ResearchProjectDetail';
 import ResearchProjectDelete from '../components/researchProject/ResearchProjectDelete';
 import { researchProjectApi } from '../service/researchProjectApi';
-
+import './ResearchProjectPage.css';
 const ResearchProjectPage = () => {
     const [view, setView] = useState('list');
     const [selectedProject, setSelectedProject] = useState(null);
