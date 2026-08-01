@@ -24,6 +24,7 @@ export function App() {
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
+            onProjectsClick={() => navigateTo('projects')}
           />
         )}
         {page === 'auth' && (
