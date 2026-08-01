@@ -1,5 +1,6 @@
 package com.dumij.biovault.controller;
 
+import com.dumij.biovault.service.PingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,22 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class ApiController {
 
-//    private final PingService pingService;
-    //private final SequenceService sequenceService;
+    private final PingService pingService;
 
-    //public ApiController(PingService pingService, SequenceService sequenceService) {
-        //this.pingService = pingService;
-        //this.sequenceService = sequenceService;
-    //}
+    public ApiController(PingService pingService) {
+        this.pingService = pingService;
+    }
 
     @GetMapping("ping")
     public String ping() {
         return "pong";
     }
-
-    //@GetMapping("sequence")
-    //public String sequence() {
-        //return sequenceService.sequenceStatus();
-    //}
-
 }
