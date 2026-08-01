@@ -1,0 +1,5 @@
+SECURITY_USERNAME=admin
+SECURITY_PASSWORD=admin123
+
+MONGODB_DATABASE="biovault-db"
+MONGODB_URI="mongodb+srv://biovault-admin:rFy7aGEaGVi7F1CB@biovault.dvebb58.mongodb.net/?appName=BioVault"
