@@ -1,81 +1,125 @@
-import React, { useState, useEffect } from 'react'; // MUST have curly braces around useState and useEffect
-import Sidebar from '../components/Sidebar';         // Correct path to Sidebar
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../components/Sidebar';
 import SequenceTypePage from './SequenceTypePage';
 import StorageLocation from './storageLocation';
-import './DashboardShell.css';                      // Correct path to DashboardShell's own CSS
+import './DashboardShell.css';
 
+export default function DashboardShell({
+  isOpen = false,
+  onClose,
+  currentRole = 'researcher',
+  onRoleSwitch,
+  currentView = 'overview',
+  onViewChange,
+  onLogout,
+  onOpenMenu,
+  onGoHome,
+}) {
+  const [sidebarOpen, setSidebarOpen] = useState(Boolean(isOpen));
 
-export default function DashboardShell({ isOpen, onClose, currentRole, onRoleSwitch, currentView, onViewChange, onLogout }) {
-  // 1. FIXED: Set the id to 'seq-types' and added professional label matching your theme
-  const researcherMenu = [
-    { id: 'overview', label: 'Analysis Dashboard', icon: '📊' },
-    { id: 'seq-types', label: 'Sequence Type Registry', icon: '🧬' }, 
-    { id: 'projects', label: 'Research Projects', icon: '📁' },
-  ];
+  useEffect(() => {
+    setSidebarOpen(Boolean(isOpen));
+  }, [isOpen]);
 
-  const adminMenu = [
-    { id: 'overview', label: 'System Overview', icon: '🛡️' },
-    { id: 'users', label: 'User Management', icon: '👥' },
-    { id: 'seq-types', label: 'Sequence Type Registry', icon: '⚙️' },
-    { id: 'storage-locs', label: 'Storage Locations', icon: '📍' },
-  ];
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+    if (onClose) onClose();
+  };
 
-  const activeMenu = currentRole === 'admin' ? adminMenu : researcherMenu;
+  const openSidebar = () => {
+    setSidebarOpen(true);
+    if (onOpenMenu) onOpenMenu();
+  };
+
+  const isAdmin = currentRole === 'admin';
+
+  const renderOverview = () => (
+    <div className="dash-grid">
+      <div className={`dash-card dash-card--hero ${isAdmin ? 'admin-gradient' : ''}`}>
+        <span className="dash-card__eyebrow">{isAdmin ? 'System operations' : 'Research workspace'}</span>
+        <h3>{isAdmin ? 'Administrative command center' : 'Research collaboration hub'}</h3>
+        <p>
+          {isAdmin
+            ? 'Monitor system health, manage the registry, and oversee storage operations from one workspace.'
+            : 'Review sequence classifications, manage your projects, and keep your research records in sync.'}
+        </p>
+      </div>
+      <div className="dash-subgrid">
+        <div className="dash-stat">
+          <strong>{isAdmin ? '12' : '4'}</strong>
+          <span>{isAdmin ? 'Active modules' : 'Open projects'}</span>
+        </div>
+        <div className="dash-stat">
+          <strong>{isAdmin ? '98%' : '76%'}</strong>
+          <span>{isAdmin ? 'System readiness' : 'Data completeness'}</span>
+        </div>
+        <div className="dash-stat">
+          <strong>{isAdmin ? '24/7' : 'Live'}</strong>
+          <span>{isAdmin ? 'Operational monitoring' : 'Research activity'}</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (currentView) {
+      case 'seq-types':
+        return <SequenceTypePage onGoHome={onGoHome || onLogout} />;
+      case 'storage-locs':
+        return <StorageLocation onGoHome={onGoHome || onLogout} />;
+      case 'users':
+        return (
+          <div className="dash-card">
+            <h3>User management</h3>
+            <p>Admin controls for role assignment and access policies will appear here.</p>
+          </div>
+        );
+      case 'projects':
+        return (
+          <div className="dash-card">
+            <h3>Research projects</h3>
+            <p>Project details and collaboration tools will appear here.</p>
+          </div>
+        );
+      default:
+        return renderOverview();
+    }
+  };
 
   return (
-    <>
-      {/* Background Dimming Backdrop overlay */}
-      {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
+    <div className="dash-shell">
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={closeSidebar}
+        currentRole={currentRole}
+        onRoleSwitch={(nextRole) => {
+          if (onRoleSwitch) onRoleSwitch(nextRole);
+          closeSidebar();
+        }}
+        currentView={currentView}
+        onViewChange={(nextView) => {
+          if (onViewChange) onViewChange(nextView);
+          closeSidebar();
+        }}
+        onLogout={onLogout}
+      />
 
-      {/* Main Drawer Slide Panel */}
-      <aside className={`sidebar-drawer ${isOpen ? 'sidebar-drawer--open' : ''}`}>
-        <div className="sidebar-drawer__header">
-          <div className="sidebar-drawer__profile">
-            <div className="sidebar-drawer__avatar">
-              {currentRole === 'admin' ? 'A' : 'R'}
-            </div>
-            <div>
-              <h4 className="sidebar-drawer__user-name">Dr. Dumij Vault</h4>
-              <span className="sidebar-drawer__role-badge">{currentRole}</span>
+      <header className="dash-shell__topbar">
+        <div className="dash-shell__left-cluster">
+          <button className="dash-shell__menu-btn" onClick={openSidebar}>☰ Menu</button>
+          <div>
+            <h2 className="dash-shell__system-logo">BioVault Workspace</h2>
+            <div className="dash-shell__status-indicator">
+              {isAdmin ? 'Administrator access' : 'Researcher access'}
             </div>
           </div>
-          <button className="sidebar-drawer__close-btn" onClick={onClose}>×</button>
         </div>
+        <div className="dash-shell__status-indicator">Viewing {currentView}</div>
+      </header>
 
-        {/* Dynamic Navigation Items */}
-        <nav className="sidebar-drawer__nav">
-          <p className="sidebar-drawer__section-title">Navigation Ledger</p>
-          {activeMenu.map((item) => (
-            <button
-              key={item.id}
-              className={`sidebar-drawer__nav-item ${currentView === item.id ? 'sidebar-drawer__nav-item--active' : ''}`}
-              onClick={() => {
-                onViewChange(item.id);
-                onClose(); // Auto-close sidebar panel after clicking an option
-              }}
-            >
-              <span className="sidebar-drawer__nav-icon">{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        {/* Workspace Quick-Switch Action Footer Links */}
-        <footer className="sidebar-drawer__footer">
-          <button 
-            className="sidebar-drawer__toggle-btn"
-            onClick={() => {
-              onRoleSwitch(currentRole === 'admin' ? 'researcher' : 'admin');
-              onClose();
-            }}
-          >
-            🔄 Simulation Swap Profile
-          </button>
-          <button className="sidebar-drawer__logout-btn" onClick={onLogout}>
-            🚪 Terminate Session
-          </button>
-        </footer>
-      </aside>
-    </>
+      <div className="dash-shell__content">
+        {renderContent()}
+      </div>
+    </div>
   );
 }
