@@ -1,44 +1,43 @@
-package com.dumij.biovault.service;
+package com.biovault.service;
 
-import com.dumij.biovault.model.Sample;
-import com.dumij.biovault.repository.SampleRepository;
+import com.biovault.model.Sample;
+import com.biovault.repository.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SampleService {
 
-    private final SampleRepository sampleRepository;
-
     @Autowired
-    public SampleService(SampleRepository sampleRepository) {
-        this.sampleRepository = sampleRepository;
-    }
+    private SampleRepository sampleRepository;
 
-    public List<Sample> getAllSamples() {
-        return sampleRepository.findAll();
+    public Sample createSample(Sample sample) {
+        // Let MongoDB generate the ID automatically
+        return sampleRepository.save(sample);
     }
 
     public Optional<Sample> getSampleById(String id) {
         return sampleRepository.findById(id);
     }
 
-    public Sample createSample(Sample sample) {
-        return sampleRepository.save(sample);
+    public List<Sample> getAllSamples() {
+        return sampleRepository.findAll();
     }
 
-    public Sample updateSample(String id, Sample updatedSample) {
-        return sampleRepository.findById(id).map(sample -> {
-            sample.setName(updatedSample.getName());
-            sample.setSpecies(updatedSample.getSpecies());
-            sample.setProjectId(updatedSample.getProjectId());
-            sample.setCollectionDate(updatedSample.getCollectionDate());
-            sample.setStorageLocationId(updatedSample.getStorageLocationId());
-            return sampleRepository.save(sample);
-        }).orElseThrow(() -> new RuntimeException("Sample not found with id: " + id));
+    public Sample updateSample(String id, Sample sampleDetails) {
+        Sample existing = sampleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sample not found with id: " + id));
+
+        existing.setSpecies(sampleDetails.getSpecies());
+        existing.setSampleType(sampleDetails.getSampleType());
+        existing.setCollectionDate(sampleDetails.getCollectionDate());
+        existing.setStorageLocation(sampleDetails.getStorageLocation());
+        existing.setProjectId(sampleDetails.getProjectId());
+        existing.setStorageLocationId(sampleDetails.getStorageLocationId());
+
+        return sampleRepository.save(existing);
     }
 
     public void deleteSample(String id) {

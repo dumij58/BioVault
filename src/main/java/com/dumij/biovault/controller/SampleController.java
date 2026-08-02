@@ -1,8 +1,7 @@
-package com.dumij.biovault.controller;
+package com.biovault.controller;
 
-import com.dumij.biovault.model.Sample;
-import com.dumij.biovault.service.SampleService;
-import jakarta.validation.Valid;
+import com.biovault.model.Sample;
+import com.biovault.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +11,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/samples")
+@CrossOrigin(origins = "*")
 public class SampleController {
 
-    private final SampleService sampleService;
-
     @Autowired
-    public SampleController(SampleService sampleService) {
-        this.sampleService = sampleService;
-    }
+    private SampleService sampleService;
 
-    @GetMapping
-    public ResponseEntity<List<Sample>> getAllSamples() {
-        return ResponseEntity.ok(sampleService.getAllSamples());
+    @PostMapping
+    public ResponseEntity<Sample> createSample(@RequestBody Sample sample) {
+        Sample created = sampleService.createSample(sample);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -33,15 +30,15 @@ public class SampleController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Sample> createSample(@Valid @RequestBody Sample sample) {
-        Sample created = sampleService.createSample(sample);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    @GetMapping
+    public List<Sample> getAllSamples() {
+        return sampleService.getAllSamples();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Sample> updateSample(@PathVariable String id, @Valid @RequestBody Sample sample) {
-        return ResponseEntity.ok(sampleService.updateSample(id, sample));
+    public ResponseEntity<Sample> updateSample(@PathVariable String id, @RequestBody Sample sample) {
+        Sample updated = sampleService.updateSample(id, sample);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
