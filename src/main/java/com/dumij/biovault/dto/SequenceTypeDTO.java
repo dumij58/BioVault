@@ -1,24 +1,15 @@
-package com.dumij.biovault.model;
+package com.dumij.biovault.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+public class SequenceTypeDTO {
 
-@Document(collection = "sequence_types")
-public class SequenceType {
-
-    @Id
-    private String id; // MongoDB uses String IDs by default
-
-    @Indexed(unique = true)
+    private String id;
     private String name;
-
     private String description;
 
     // Constructors
-    public SequenceType() {}
+    public SequenceTypeDTO() {}
 
-    public SequenceType(String id, String name, String description) {
+    public SequenceTypeDTO(String id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
