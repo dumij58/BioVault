@@ -31,33 +31,6 @@ function Registration({ onGoHome, onGoLogin }) {
                         <input type='password' className='input-field' placeholder='Confirm Password' required />
                         <i className="material-symbols-outlined">lock_reset</i>
                     </div>
-                    <div className='input-wrapper'>
-                        <input type='text' className='input-field' placeholder='Researcher ID' required />
-                        <i className="material-symbols-outlined">badge</i>
-                    </div>
-                    <div className='input-wrapper'>
-                        <select name="department" id="department" className='input-field select-field' required defaultValue="">
-                            <option value="" disabled hidden>Select Department</option>
-                            <option value="cs">Computer Science</option>
-                            <option value="math">Mathematics</option>
-                            <option value="physics">Physics</option>
-                            <option value="chemistry">Chemistry</option>
-                        </select>
-                        <i className="material-symbols-outlined">apartment</i>
-                    </div>
-
-                    <div className='input-wrapper'>
-                        <select name="designation" id="designation" className='input-field select-field' required defaultValue="">
-                            <option value="" disabled hidden>Select Designation</option>
-                            <option value="Professor">Professor</option>
-                            <option value="lecturer">Senior Lecturer / Lecturer</option>
-                            <option value="postdoctoral_researcher">Postdoctoral Researcher</option>
-                            <option value="research_assistant">Research Assistant</option>
-                            <option value="graduate_undergraduate_researcher">Graduate / Undergraduate Researcher</option>
-                        </select>
-                        <i className="material-symbols-outlined">work</i>
-                    </div>
-
                     <button type='submit' className='reg-button'>Register</button>
                 </form>
             </div>

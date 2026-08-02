@@ -1,0 +1,195 @@
+.seq-mgmt {
+    display: grid;
+    gap: 1.25rem;
+    min-height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #ffffff;
+}
+
+/* Glassmorphic Panel Layouts */
+.seq-mgmt__topbar,
+.seq-mgmt__card,
+.seq-mgmt__table-container {
+    border: 1px solid rgba(181, 196, 255, 0.14);
+    border-radius: 24px;
+    background: rgba(10, 16, 40, 0.56);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(18px);
+    padding: 1.5rem;
+}
+
+.seq-mgmt__topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+}
+
+.seq-mgmt__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(135deg, #ffffff, #9eb8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+/* Back Button styling matches your team's custom style */
+.seq-mgmt__back-btn {
+    border: 1px solid rgba(181, 196, 255, 0.18);
+    border-radius: 14px;
+    padding: 0.65rem 1.15rem;
+    font: inherit;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.08);
+    color: #edf2ff;
+    transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.seq-mgmt__back-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(95, 125, 255, 0.18);
+}
+
+/* Form Styles */
+.seq-mgmt__form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) auto;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.seq-mgmt__form-group {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.seq-mgmt__form-group label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.76rem;
+    color: #9eb8ff;
+}
+
+.seq-mgmt__input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(181, 196, 255, 0.15);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    color: #fff;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.seq-mgmt__input:focus {
+    border-color: #6e8cff;
+}
+
+/* Action Buttons */
+.seq-mgmt__submit-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 0.85rem 1.5rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6e8cff, #5f41e4);
+    color: #fff;
+    box-shadow: 0 18px 32px rgba(42, 61, 147, 0.3);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    height: 48px;
+}
+
+.seq-mgmt__submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 36px rgba(42, 61, 147, 0.4);
+}
+
+.seq-mgmt__cancel-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(237, 242, 255, 0.6);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+/* Data Table Styles */
+.seq-mgmt__table-container {
+    padding: 0;
+    overflow-x: auto;
+}
+
+.seq-mgmt__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.seq-mgmt__table th {
+    padding: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.76rem;
+    color: #9eb8ff;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(181, 196, 255, 0.15);
+}
+
+.seq-mgmt__table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid rgba(181, 196, 255, 0.08);
+}
+
+.seq-mgmt__name {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.seq-mgmt__desc {
+    color: rgba(237, 242, 255, 0.72);
+}
+
+/* Inline action buttons */
+.seq-mgmt__edit-btn,
+.seq-mgmt__delete-btn {
+    background: none;
+    border: none;
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 1rem;
+    transition: opacity 0.2s ease;
+}
+
+.seq-mgmt__edit-btn { color: #6e8cff; }
+.seq-mgmt__delete-btn { color: #ff6e6e; }
+
+.seq-mgmt__edit-btn:hover,
+.seq-mgmt__delete-btn:hover {
+    opacity: 0.8;
+}
+
+.seq-mgmt__empty {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(237, 242, 255, 0.4);
+}
+
+/* Responsiveness Layout Markers */
+@media (max-width: 768px) {
+    .seq-mgmt__form {
+        grid-template-columns: 1fr;
+    }
+    .seq-mgmt__topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
