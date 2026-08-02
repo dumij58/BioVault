@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/sequence-types/**").permitAll() 
                         .anyRequest().permitAll()
                 );
 
