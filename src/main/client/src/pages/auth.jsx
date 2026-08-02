@@ -3,7 +3,7 @@ import Login from './login';
 import './login.css';
 
 
-function Auth({ onGoHome, onGoRegistration }) {
+function Auth({ onGoHome, onGoRegistration, onGoSequence }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userRole, setUserRole] = useState('guest');
@@ -52,6 +52,16 @@ function Auth({ onGoHome, onGoRegistration }) {
                 >
                     Logout
                 </button>
+                <button
+                    onClick={onGoSequence}
+                    style={{
+                        marginTop: '0.75rem', marginLeft: '0.75rem', padding: '0.75rem 2rem',
+                        background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)',
+                        borderRadius: '8px', fontSize: '1rem', cursor: 'pointer'
+                    }}
+                >
+                    Open Sequence Console
+                </button>
             </div>
         );
     }
@@ -71,6 +81,16 @@ function Auth({ onGoHome, onGoRegistration }) {
                 >
                     Logout
                 </button>
+                <button
+                    onClick={onGoSequence}
+                    style={{
+                        marginTop: '0.75rem', marginLeft: '0.75rem', padding: '0.75rem 2rem',
+                        background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)',
+                        borderRadius: '8px', fontSize: '1rem', cursor: 'pointer'
+                    }}
+                >
+                    Open Sequence Console
+                </button>
             </div>
         );
     }
@@ -89,6 +109,16 @@ function Auth({ onGoHome, onGoRegistration }) {
                     }}
                 >
                     Logout
+                </button>
+                <button
+                    onClick={onGoSequence}
+                    style={{
+                        marginTop: '0.75rem', marginLeft: '0.75rem', padding: '0.75rem 2rem',
+                        background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)',
+                        borderRadius: '8px', fontSize: '1rem', cursor: 'pointer'
+                    }}
+                >
+                    Open Sequence Console
                 </button>
             </div>
         );

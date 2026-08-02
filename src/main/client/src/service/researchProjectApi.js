@@ -2,10 +2,16 @@ import { Env } from "../config/Env";
 
 const API_BASE_URL = Env.API_BASE_URL;
 
+const authHeader = {
+    "Authorization": "Basic " + btoa("admin:admin123"),
+};
+
 export const researchProjectApi = {
     // Get all projects
     getAll: async () => {
-        const response = await fetch(`${API_BASE_URL}/research_projects/getall`);
+        const response = await fetch(`${API_BASE_URL}/research_projects/getall`, {
+            headers: authHeader
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch projects');
         }
@@ -14,7 +20,9 @@ export const researchProjectApi = {
 
     // Get project by ID
     getById: async (id) => {
-        const response = await fetch(`${API_BASE_URL}/research_projects/${id}`);
+        const response = await fetch(`${API_BASE_URL}/research_projects/${id}`, {
+            headers: authHeader
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch project');
         }
@@ -26,6 +34,7 @@ export const researchProjectApi = {
         const response = await fetch(`${API_BASE_URL}/research_projects/save`, {
             method: 'POST',
             headers: {
+                authHeader,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(project),
@@ -41,6 +50,7 @@ export const researchProjectApi = {
         const response = await fetch(`${API_BASE_URL}/research_projects/update/${id}`, {
             method: 'PUT',
             headers: {
+                authHeader,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(project),
@@ -55,6 +65,7 @@ export const researchProjectApi = {
     delete: async (id) => {
         const response = await fetch(`${API_BASE_URL}/research_projects/delete/${id}`, {
             method: 'DELETE',
+            headers: authHeader
         });
         if (!response.ok) {
             throw new Error('Failed to delete project');

@@ -3,6 +3,7 @@ import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
+import Sequence from '../pages/sequence'
 import InstitutionManagement from '../pages/InstitutionManagement'
 import StorageLocation from "../pages/storageLocation"
 import ResearchProjectPage from "../pages/ResearchProjectPage"
@@ -26,6 +27,7 @@ export function App() {
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
+            onSequenceClick={() => navigateTo('sequence')}
             onInstitutionsClick={() => navigateTo("institutions")}
             onProjectsClick={() => navigateTo("projects")}
             onStorageClick={() => navigateTo('storageLocation')}
@@ -36,6 +38,7 @@ export function App() {
           <Auth
             onGoHome={() => navigateTo('home')}
             onGoRegistration={() => navigateTo('registration')}
+            onGoSequence={() => navigateTo('sequence')}
           />
         )}
 
@@ -43,6 +46,12 @@ export function App() {
           <Registration
             onGoHome={() => navigateTo('home')}
             onGoLogin={() => navigateTo('auth')}
+          />
+        )}
+        
+        {page === 'sequence' && (
+          <Sequence
+            onGoHome={() => navigateTo('home')}
           />
         )}
 
