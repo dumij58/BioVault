@@ -11,12 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.core.userdetails.User;
-
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +23,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf((AbstractHttpConfigurer::disable))
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())   // ✅ Enable CORS with the bean below
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
@@ -55,16 +54,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    // ✅ This is the CORRECT CORS configuration
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8080"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        CorsConfiguration config = new CorsConfiguration();
+
+        // ✅ Use allowedOriginPatterns (not allowedOrigins)
+        config.addAllowedOriginPattern("*");    // This is the fix!
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);       // ✅ Works with allowedOriginPattern
+
+        source.registerCorsConfiguration("/api/**", config);
+        return new CorsFilter(source);
     }
 }
