@@ -10,7 +10,9 @@ import DashboardShell from "../pages/DashboardShell" // Import the master dashbo
 export function App() {
   const [page, setPage] = useState('home');
   // Tracks who is active inside the system ('admin' or 'researcher')
-  const [userRole, setUserRole] = useState('researcher'); 
+  const [userRole, setUserRole] = useState('researcher');
+  const [dashboardView, setDashboardView] = useState('overview');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigateTo = (nextPage) => {
     if (nextPage === page) {
@@ -22,12 +24,21 @@ export function App() {
   // Called automatically when credentials match in your corrected Auth.jsx page
   const handleLoginSuccess = (roleFromDatabase) => {
     setUserRole(roleFromDatabase); // Lock session clearance level context
+    setDashboardView('overview');
+    setSidebarOpen(false);
     navigateTo('dashboard');      // Direct route straight into the interactive dashboard workspace
   };
 
   const handleLogout = () => {
     setUserRole('guest');
+    setDashboardView('overview');
+    setSidebarOpen(false);
     navigateTo('home');
+  };
+
+  const handleRoleSwitch = (nextRole) => {
+    setUserRole(nextRole);
+    setDashboardView('overview');
   };
 
   return (
@@ -83,7 +94,14 @@ export function App() {
         {/* Dynamic Full Dashboard Interface Workspace Context */}
         {page === 'dashboard' && (
             <DashboardShell
-                forcedRole={userRole}
+                currentRole={userRole}
+                currentView={dashboardView}
+                onViewChange={setDashboardView}
+                onRoleSwitch={handleRoleSwitch}
+                onLogout={handleLogout}
+                isOpen={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+                onOpenMenu={() => setSidebarOpen(true)}
                 onGoHome={handleLogout}
             />
         )}
