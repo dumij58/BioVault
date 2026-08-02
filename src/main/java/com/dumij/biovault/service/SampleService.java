@@ -1,7 +1,7 @@
-package com.biovault.service;
+package com.dumij.biovault.service;
 
-import com.biovault.model.Sample;
-import com.biovault.repository.SampleRepository;
+import com.dumij.biovault.model.Sample;
+import com.dumij.biovault.repository.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

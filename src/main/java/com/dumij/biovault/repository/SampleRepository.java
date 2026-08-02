@@ -1,6 +1,6 @@
-package com.biovault.repository;
+package com.dumij.biovault.repository;
 
-import com.biovault.model.Sample;
+import com.dumij.biovault.model.Sample;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

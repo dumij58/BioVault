@@ -1,4 +1,4 @@
-package com.biovault.model;
+package com.dumij.biovault.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

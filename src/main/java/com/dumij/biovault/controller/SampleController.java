@@ -1,7 +1,7 @@
-package com.biovault.controller;
+package com.dumij.biovault.controller;
 
-import com.biovault.model.Sample;
-import com.biovault.service.SampleService;
+import com.dumij.biovault.model.Sample;
+import com.dumij.biovault.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
