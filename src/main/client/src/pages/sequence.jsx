@@ -10,6 +10,7 @@ import {
 import './sequence.css';
 
 function Sequence({ onGoHome }) {
+  const [sequenceName, setSequenceName] = useState('');
   const [sequenceInput, setSequenceInput] = useState('');
   const [manualLength, setManualLength] = useState('');
   const [calculatedLength, setCalculatedLength] = useState(null);
@@ -107,15 +108,17 @@ function Sequence({ onGoHome }) {
 
     setIsSaving(true);
     try {
+      const trimmedName = sequenceName.trim() || null;
       const payload = editingSequenceId
-        ? await updateSequenceApi(editingSequenceId, normalizedSequence, parsedLength)
-        : await saveSequenceApi(normalizedSequence, parsedLength);
+        ? await updateSequenceApi(editingSequenceId, trimmedName, normalizedSequence, parsedLength)
+        : await saveSequenceApi(trimmedName, normalizedSequence, parsedLength);
 
       setSuccessMessage(editingSequenceId ? `Sequence ${payload.id} updated.` : `Sequence ${payload.id} saved.`);
       setCalculatedLength(payload.seqLength ?? null);
       setManualLength(payload.seqLength?.toString() ?? '');
       setSelectedSequence(payload);
       setEditingSequenceId(null);
+      setSequenceName('');
       setSequenceInput('');
       await fetchSequences();
     } catch (error) {
@@ -128,6 +131,7 @@ function Sequence({ onGoHome }) {
   const handleEdit = (item) => {
     clearFeedback();
     setEditingSequenceId(item.id);
+    setSequenceName(item.name ?? '');
     setSequenceInput(item.sequence ?? '');
     setManualLength(item.seqLength?.toString() ?? '');
     setCalculatedLength(item.seqLength ?? null);
@@ -137,6 +141,7 @@ function Sequence({ onGoHome }) {
   const handleCancelEdit = () => {
     clearFeedback();
     setEditingSequenceId(null);
+    setSequenceName('');
     setSequenceInput('');
     setManualLength('');
     setCalculatedLength(null);
@@ -182,6 +187,15 @@ function Sequence({ onGoHome }) {
         <article className="sequence-page_card">
           <h2>{editingSequenceId ? 'Edit Sequence' : 'Create Sequence'}</h2>
           <form className="sequence-page_form" onSubmit={handleSave}>
+            <label htmlFor="sequence-name">Name/Title (optional)</label>
+            <input
+              id="sequence-name"
+              type="text"
+              value={sequenceName}
+              onChange={(event) => setSequenceName(event.target.value)}
+              placeholder="e.g. Sample 1 - COI gene"
+            />
+
             <label htmlFor="sequence-input">Sequence</label>
             <textarea
               id="sequence-input"
@@ -233,6 +247,10 @@ function Sequence({ onGoHome }) {
                 <dd>{selectedSequence.id}</dd>
               </div>
               <div>
+                <dt>Name</dt>
+                <dd>{selectedSequence.name ?? 'N/A'}</dd>
+              </div>
+              <div>
                 <dt>Sequence</dt>
                 <dd>{selectedSequence.sequence}</dd>
               </div>
@@ -261,6 +279,7 @@ function Sequence({ onGoHome }) {
               <li key={item.id}>
                 <div>
                   <p><strong>ID:</strong> {item.id}</p>
+                  <p><strong>Name:</strong> {item.name ?? 'N/A'}</p>
                   <p><strong>Length:</strong> {item.seqLength}</p>
                   <p className="sequence-page_sequence-preview">{item.sequence}</p>
                 </div>

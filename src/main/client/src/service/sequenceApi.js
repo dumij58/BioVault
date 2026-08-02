@@ -1,6 +1,10 @@
 import { Env } from "../config/Env";
 import { parsePingResponse } from "../models/ping";
 
+const authHeader = {
+    "Authorization": "Basic " + btoa("admin:admin123"),
+};
+
 export async function pingApi() {
     const response = await fetch(`${Env.API_BASE_URL}/ping`);
     if (!response.ok) {
@@ -11,6 +15,7 @@ export async function pingApi() {
 }
 
 const sequenceBaseUrl = `${Env.API_BASE_URL}/sequence`;
+const sequenceTypeBaseUrl = `${Env.API_BASE_URL}/sequencetype`;
 
 async function parseJsonResponse(response, fallbackMessage) {
     if (!response.ok) {
@@ -21,29 +26,33 @@ async function parseJsonResponse(response, fallbackMessage) {
 }
 
 export async function listSequencesApi() {
-    const response = await fetch(`${sequenceBaseUrl}/getall`);
+    const response = await fetch(`${sequenceBaseUrl}/getall`, {
+        headers: authHeader
+    });
     return parseJsonResponse(response, "Failed to fetch sequences");
 }
 
-export async function saveSequenceApi(sequence, seqLength = null) {
+export async function saveSequenceApi(name, sequence, seqLength = null, seqType = null) {
     const response = await fetch(`${sequenceBaseUrl}/save`, {
         method: "POST",
         headers: {
+            authHeader,
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sequence, seqLength }),
+        body: JSON.stringify({ name, sequence, seqLength, seqType }),
     });
 
     return parseJsonResponse(response, "Failed to save sequence");
 }
 
-export async function updateSequenceApi(id, sequence, seqLength = null) {
+export async function updateSequenceApi(id, name, sequence, seqLength = null, seqType = null) {
     const response = await fetch(`${sequenceBaseUrl}/update/${id}`, {
         method: "PUT",
         headers: {
+            authHeader,
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ sequence, seqLength }),
+        body: JSON.stringify({ name, sequence, seqLength, seqType }),
     });
 
     return parseJsonResponse(response, "Failed to update sequence");
@@ -53,6 +62,7 @@ export async function calcSequenceLengthApi(sequence, seqLength = null) {
     const response = await fetch(`${sequenceBaseUrl}/calclength`, {
         method: "POST",
         headers: {
+            authHeader,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ sequence, seqLength }),
@@ -62,13 +72,16 @@ export async function calcSequenceLengthApi(sequence, seqLength = null) {
 }
 
 export async function getSequenceByIdApi(id) {
-    const response = await fetch(`${sequenceBaseUrl}/${id}`);
+    const response = await fetch(`${sequenceBaseUrl}/${id}`, {
+        headers: authHeader
+    });
     return parseJsonResponse(response, "Failed to load sequence details");
 }
 
 export async function deleteSequenceApi(id) {
     const response = await fetch(`${sequenceBaseUrl}/delete/${id}`, {
         method: "DELETE",
+        headers: authHeader
     });
 
     if (!response.ok) {

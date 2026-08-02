@@ -76,7 +76,8 @@
 }
 
 .sequence-page_form input,
-.sequence-page_form textarea {
+.sequence-page_form textarea,
+.sequence-page_form select {
   border: 1px solid rgba(181, 196, 255, 0.22);
   background: rgba(255, 255, 255, 0.06);
   color: #edf2ff;
@@ -87,6 +88,19 @@
 
 .sequence-page_form textarea {
   resize: vertical;
+}
+
+.sequence-page_form--inline {
+  margin-top: 1rem;
+}
+
+.sequence-page_form--inline .sequence-page_actions {
+  align-items: stretch;
+}
+
+.sequence-page_form--inline input {
+  flex: 1;
+  min-width: 160px;
 }
 
 .sequence-page_actions,
