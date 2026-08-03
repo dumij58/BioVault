@@ -3,16 +3,25 @@ import {
   calcSequenceLengthApi,
   deleteSequenceApi,
   getSequenceByIdApi,
+  listSamplesApi,
   listSequencesApi,
   saveSequenceApi,
   updateSequenceApi,
 } from '../service/sequenceApi';
+import { sequenceTypeService } from '../service/sequenceTypeService';
+import { useAuth } from '../context/AuthContext';
 import './sequence.css';
 
 function Sequence({ onGoHome }) {
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'ADMIN';
   const [sequenceName, setSequenceName] = useState('');
   const [sequenceInput, setSequenceInput] = useState('');
   const [manualLength, setManualLength] = useState('');
+  const [seqTypeId, setSeqTypeId] = useState('');
+  const [sampleId, setSampleId] = useState('');
+  const [sequenceTypes, setSequenceTypes] = useState([]);
+  const [samples, setSamples] = useState([]);
   const [calculatedLength, setCalculatedLength] = useState(null);
   const [sequences, setSequences] = useState([]);
   const [selectedSequence, setSelectedSequence] = useState(null);
@@ -45,7 +54,31 @@ function Sequence({ onGoHome }) {
 
   useEffect(() => {
     fetchSequences();
-  }, []);
+
+    sequenceTypeService.getAll()
+      .then(setSequenceTypes)
+      .catch(() => setSequenceTypes([]));
+
+    listSamplesApi()
+      .then((data) => {
+        setSamples(data);
+        // Researchers create a sequence right after adding a sample, so default to the latest one
+        if (!isAdmin && data.length > 0) {
+          setSampleId(data[data.length - 1].id);
+        }
+      })
+      .catch(() => setSamples([]));
+  }, [isAdmin]);
+
+  const getSampleLabel = (sample) => {
+    if (!sample) return 'N/A';
+    return sample.sampleType ? `${sample.species} (${sample.sampleType})` : sample.species ?? sample.id;
+  };
+
+  const findSequenceTypeName = (id) => sequenceTypes.find((item) => item.id === id)?.name ?? id ?? 'N/A';
+  const findSampleLabel = (id) => getSampleLabel(samples.find((item) => item.id === id)) ?? id ?? 'N/A';
+
+  const defaultSampleId = () => (!isAdmin && samples.length > 0 ? samples[samples.length - 1].id : '');
 
   const parseManualLength = () => {
     const trimmed = manualLength.trim();
@@ -110,8 +143,8 @@ function Sequence({ onGoHome }) {
     try {
       const trimmedName = sequenceName.trim() || null;
       const payload = editingSequenceId
-        ? await updateSequenceApi(editingSequenceId, trimmedName, normalizedSequence, parsedLength)
-        : await saveSequenceApi(trimmedName, normalizedSequence, parsedLength);
+        ? await updateSequenceApi(editingSequenceId, trimmedName, normalizedSequence, parsedLength, seqTypeId || null, sampleId || null)
+        : await saveSequenceApi(trimmedName, normalizedSequence, parsedLength, seqTypeId || null, sampleId || null);
 
       setSuccessMessage(editingSequenceId ? `Sequence ${payload.id} updated.` : `Sequence ${payload.id} saved.`);
       setCalculatedLength(payload.seqLength ?? null);
@@ -120,6 +153,8 @@ function Sequence({ onGoHome }) {
       setEditingSequenceId(null);
       setSequenceName('');
       setSequenceInput('');
+      setSeqTypeId('');
+      setSampleId(defaultSampleId());
       await fetchSequences();
     } catch (error) {
       setErrorMessage(error.message || (editingSequenceId ? 'Could not update sequence.' : 'Could not save sequence.'));
@@ -135,6 +170,8 @@ function Sequence({ onGoHome }) {
     setSequenceInput(item.sequence ?? '');
     setManualLength(item.seqLength?.toString() ?? '');
     setCalculatedLength(item.seqLength ?? null);
+    setSeqTypeId(item.seqTypeId ?? '');
+    setSampleId(item.sampleId ?? '');
     setSelectedSequence(item);
   };
 
@@ -145,6 +182,8 @@ function Sequence({ onGoHome }) {
     setSequenceInput('');
     setManualLength('');
     setCalculatedLength(null);
+    setSeqTypeId('');
+    setSampleId(defaultSampleId());
   };
 
   const handleView = async (id) => {
@@ -215,6 +254,41 @@ function Sequence({ onGoHome }) {
               placeholder="If empty, backend computes from sequence"
             />
 
+            <label htmlFor="sequence-type">Sequence Type</label>
+            <select
+              id="sequence-type"
+              value={seqTypeId}
+              onChange={(event) => setSeqTypeId(event.target.value)}
+            >
+              <option value="">None</option>
+              {sequenceTypes.map((type) => (
+                <option key={type.id} value={type.id}>{type.name}</option>
+              ))}
+            </select>
+
+            {isAdmin ? (
+              <>
+                <label htmlFor="sample">Sample</label>
+                <select
+                  id="sample"
+                  value={sampleId}
+                  onChange={(event) => setSampleId(event.target.value)}
+                >
+                  <option value="">None</option>
+                  {samples.map((sample) => (
+                    <option key={sample.id} value={sample.id}>{getSampleLabel(sample)}</option>
+                  ))}
+                </select>
+              </>
+            ) : (
+              <>
+                <label>Sample</label>
+                <p className="sequence-page_meta">
+                  {sampleId ? findSampleLabel(sampleId) : 'No sample available yet.'}
+                </p>
+              </>
+            )}
+
             <div className="sequence-page_actions">
               <button type="button" className="sequence-page_ghost" onClick={handleCalculate} disabled={isCalculating}>
                 {isCalculating ? 'Calculating...' : 'Calculate Length'}
@@ -258,6 +332,14 @@ function Sequence({ onGoHome }) {
                 <dt>Length</dt>
                 <dd>{selectedSequence.seqLength}</dd>
               </div>
+              <div>
+                <dt>Sequence Type</dt>
+                <dd>{selectedSequence.seqTypeId ? findSequenceTypeName(selectedSequence.seqTypeId) : 'N/A'}</dd>
+              </div>
+              <div>
+                <dt>Sample</dt>
+                <dd>{selectedSequence.sampleId ? findSampleLabel(selectedSequence.sampleId) : 'N/A'}</dd>
+              </div>
             </dl>
           ) : (
             <p className="sequence-page_meta">Select a saved sequence to load details from the endpoint.</p>
@@ -281,6 +363,8 @@ function Sequence({ onGoHome }) {
                   <p><strong>ID:</strong> {item.id}</p>
                   <p><strong>Name:</strong> {item.name ?? 'N/A'}</p>
                   <p><strong>Length:</strong> {item.seqLength}</p>
+                  <p><strong>Type:</strong> {item.seqTypeId ? findSequenceTypeName(item.seqTypeId) : 'N/A'}</p>
+                  <p><strong>Sample:</strong> {item.sampleId ? findSampleLabel(item.sampleId) : 'N/A'}</p>
                   <p className="sequence-page_sequence-preview">{item.sequence}</p>
                 </div>
                 <div className="sequence-page_item-actions">
