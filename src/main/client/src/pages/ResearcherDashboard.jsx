@@ -1,7 +1,7 @@
 import './home.css';
 import { useAuth } from '../context/AuthContext';
 
-function ResearcherDashboard({ onProjectsClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick }) {
+function ResearcherDashboard({ onProjectsClick, onAddProjectClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick }) {
     const { user } = useAuth();
 
     return (
@@ -30,6 +30,9 @@ function ResearcherDashboard({ onProjectsClick, onSequenceClick, onStorageClick,
                     <p className="home__lead">
                         Use the shortcuts above to jump into your active work.
                     </p>
+                    <div className="home__cta-row">
+                        <button type="button" className="home__primary-button" onClick={onAddProjectClick}>+ Add Project</button>
+                    </div>
                 </div>
             </div>
         </section>

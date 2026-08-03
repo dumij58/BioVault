@@ -7,6 +7,7 @@ import Sequence from '../pages/sequence'
 import InstitutionManagement from '../pages/InstitutionManagement'
 import StorageLocation from "../pages/storageLocation"
 import ResearchProjectPage from "../pages/ResearchProjectPage"
+import AddProjectPage from "../pages/AddProjectPage"
 import SequenceTypePage from "../pages/SequenceTypePage"
 import ResearcherDashboard from '../pages/ResearcherDashboard'
 import AdminDashboard from '../pages/AdminDashboard'
@@ -88,6 +89,12 @@ export function App() {
             onGoHome={navigateBack}
           />
         )}
+
+        {page === 'addProject' && (
+          <AddProjectPage
+            onGoBack={navigateBack}
+          />
+        )}
         
         {page === 'storageLocation' && (
           <StorageLocation
@@ -104,6 +111,7 @@ export function App() {
         {page === 'researcherDashboard' && (
           <ResearcherDashboard
             onProjectsClick={() => navigateTo('projects')}
+            onAddProjectClick={() => navigateTo('addProject')}
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
             onSequenceTypeClick={() => navigateTo('sequenceType')}

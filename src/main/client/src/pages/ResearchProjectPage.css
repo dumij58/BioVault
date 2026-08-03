@@ -406,6 +406,34 @@ input[type="date"].form-input::-webkit-calendar-picker-indicator:hover {
     opacity: 1;
 }
 
+.form-inline-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.form-inline-group .form-input {
+    flex: 1;
+}
+
+.form-clear-button {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 2px solid #fecaca;
+    padding: 0.65rem 1.1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.form-clear-button:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
 .form-error {
     color: #ef4444;
     font-size: 0.85rem;
