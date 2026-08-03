@@ -11,8 +11,8 @@ public class User {
     private String email;
     private String password;
     private Role role;
-    private String department;
     private String designation;
+    private String institution;
 
     public User() {
     }
@@ -21,14 +21,14 @@ public class User {
                 String email,
                 String password,
                 Role role,
-                String department,
+                String institution,
                 String designation) {
 
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.department = department;
+        this.institution = institution;
         this.designation = designation;
     }
 
@@ -72,12 +72,12 @@ public class User {
         this.role = role;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getDesignation() {

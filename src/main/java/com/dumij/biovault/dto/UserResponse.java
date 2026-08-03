@@ -8,7 +8,7 @@ public class UserResponse {
     private String name;
     private String email;
     private Role role;
-    private String department;
+    private String institution;
     private String designation;
 
     public UserResponse() {
@@ -18,14 +18,14 @@ public class UserResponse {
                          String name,
                          String email,
                          Role role,
-                         String department,
+                         String institution,
                          String designation) {
 
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
-        this.department = department;
+        this.institution = institution;
         this.designation = designation;
     }
 
@@ -61,12 +61,12 @@ public class UserResponse {
         this.role = role;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getDesignation() {

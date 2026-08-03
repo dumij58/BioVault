@@ -18,8 +18,8 @@ public class RegisterRequest {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    @NotBlank(message = "Department is required")
-    private String department;
+    @NotBlank(message = "Institution is required")
+    private String institution;
 
     @NotBlank(message = "Designation is required")
     private String designation;
@@ -51,12 +51,12 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getInstitutionId() {
+        return institution;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getDesignation() {

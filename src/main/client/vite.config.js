@@ -6,14 +6,5 @@ export default defineConfig({
   build: {
     outDir: '../resources/static/',
     emptyOutDir: true,
-  },
-  server: {
-    proxy: {
-      '/api/v1': {
-        target: 'http://localhost:8080', // Connects directly to Spring Boot
-        changeOrigin: true,
-        secure: false,
-      }
-    }
   }
 })

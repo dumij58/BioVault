@@ -14,7 +14,7 @@ public class UserMapper {
                 request.getEmail(),
                 encodedPassword,
                 Role.RESEARCHER,
-                request.getDepartment(),
+                request.getInstitutionId(),
                 request.getDesignation()
         );
     }
@@ -26,7 +26,7 @@ public class UserMapper {
                 user.getName(),
                 user.getEmail(),
                 user.getRole(),
-                user.getDepartment(),
+                user.getInstitution(),
                 user.getDesignation()
         );
     }

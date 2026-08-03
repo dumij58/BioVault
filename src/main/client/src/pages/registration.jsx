@@ -30,7 +30,6 @@ function Registration({ onGoHome, onGoLogin }) {
                 institution: form.institution,
                 designation: form.designation,
             });
-            alert('Registration Successful! Redirecting to login.');
             if (onGoLogin) onGoLogin();
         } catch (error) {
             setErrorMessage(error.message || 'Registration failed. Please try again.');
