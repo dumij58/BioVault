@@ -5,7 +5,7 @@ import { registerApi } from '../service/authApi';
 
 function Registration({ onGoHome, onGoLogin }) {
     const [form, setForm] = useState({
-        name: '', email: '', password: '', confirmPassword: '', department: '', designation: ''
+        name: '', email: '', password: '', confirmPassword: '', institution: '', designation: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,7 +27,7 @@ function Registration({ onGoHome, onGoLogin }) {
                 name: form.name,
                 email: form.email,
                 password: form.password,
-                department: form.department,
+                institution: form.institution,
                 designation: form.designation,
             });
             alert('Registration Successful! Redirecting to login.');
@@ -60,12 +60,12 @@ function Registration({ onGoHome, onGoLogin }) {
                         <i className="material-symbols-outlined">lock_reset</i>
                     </div>
                     <div className='input-wrapper'>
-                        <select name="department" id="department" className='input-field select-field' value={form.department} onChange={handleChange} required>
-                            <option value="" disabled hidden>Select Department</option>
-                            <option value="cs">Computer Science</option>
-                            <option value="math">Mathematics</option>
-                            <option value="physics">Physics</option>
-                            <option value="chemistry">Chemistry</option>
+                        <select name="institution" id="institution" className='input-field select-field' value={form.institution} onChange={handleChange} required>
+                            <option value="" disabled hidden>Select Institution</option>
+                            <option value="col">University of Colombo</option>
+                            <option value="math">University of Moratuwa</option>
+                            <option value="physics">University of Peradeniya</option>
+                            <option value="chemistry">University of Jaffna</option>
                         </select>
                         <i className="material-symbols-outlined">apartment</i>
                     </div>
