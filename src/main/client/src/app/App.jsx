@@ -54,6 +54,7 @@ export function App() {
             onInstitutionsClick={() => navigateTo("institutions")}
             onProjectsClick={() => navigateTo("projects")}
             onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
           />
         )}
         {page === 'auth' && (
@@ -105,6 +106,7 @@ export function App() {
             onProjectsClick={() => navigateTo('projects')}
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
             onLogout={handleLogout}
           />
         )}
@@ -115,6 +117,7 @@ export function App() {
             onProjectsClick={() => navigateTo('projects')}
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
             onLogout={handleLogout}
           />
         )}

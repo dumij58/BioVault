@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sequence-types")
+@RequestMapping("/api/v1/sequence-types")
 @CrossOrigin(origins = "*")
 public class SequenceTypeController {
 

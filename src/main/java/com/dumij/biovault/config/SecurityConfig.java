@@ -30,11 +30,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/v1/institutions/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/researchers/**").hasRole("ADMIN")
                     .requestMatchers("/api/**").authenticated()
-                    // Let the React SPA (index.html, JS/CSS bundles, client-side routes
-                    // like /login and /register) load without triggering the browser's
-                    // native Basic Auth popup. Only /api/** endpoints require credentials.
                     .anyRequest().permitAll())
-            // No WWW-Authenticate header on 401s, so browsers don't show their own login dialog.
             .httpBasic(basic -> basic.authenticationEntryPoint(restAuthenticationEntryPoint()));
         return http.build();
     }
@@ -54,17 +50,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ This is the CORRECT CORS configuration
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // ✅ Use allowedOriginPatterns (not allowedOrigins)
-        config.addAllowedOriginPattern("*");    // This is the fix!
+        config.addAllowedOriginPattern("*");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
-        config.setAllowCredentials(true);       // ✅ Works with allowedOriginPattern
+        config.setAllowCredentials(true);
 
         source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);

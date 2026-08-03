@@ -128,8 +128,8 @@ export default function SequenceTypePage({ onGoHome }) {
                 <td className="seq-mgmt__name">{type.name}</td>
                 <td className="seq-mgmt__desc">{type.description || 'No descriptive summary cataloged.'}</td>
                 <td>
-                  <button onClick={() => handleEdit(type)} className="seq-mgmt__edit-btn">Modify</button>
-                  <button onClick={() => handleDelete(type.id)} className="seq-mgmt__delete-btn">Purge</button>
+                  <button onClick={() => handleEdit(type)} className="seq-mgmt__edit-btn">Update</button>
+                  <button onClick={() => handleDelete(type.id)} className="seq-mgmt__delete-btn">Delete</button>
                 </td>
               </tr>
             ))}

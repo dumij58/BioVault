@@ -1,7 +1,7 @@
 import './home.css';
 import { useAuth } from '../context/AuthContext';
 
-function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick, onStorageClick, onLogout }) {
+function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick, onStorageClick, onLogout,onSequenceTypeClick }) {
     const { user } = useAuth();
 
     return (
@@ -17,6 +17,7 @@ function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick,
                     <button type="button" className="home__ghost-button" onClick={onProjectsClick}>Research Projects</button>
                     <button type="button" className="home__ghost-button" onClick={onSequenceClick}>Sequence Console</button>
                     <button type="button" className="home__ghost-button" onClick={onStorageClick}>Storage Locations</button>
+                    <button type="button" className="home__ghost-button" onClick={onSequenceTypeClick}>Sequence Types</button>
                 </div>
                 <div className="home__nav-actions">
                     <button type="button" className="home__primary-button" onClick={onLogout}>Logout</button>
