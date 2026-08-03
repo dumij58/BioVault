@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { researcherApi } from '../../service/researcherApi';
 import '../../pages/ResearchProjectPage.css';
-const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
+const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing, children }) => {
     const { user } = useAuth();
     const [formData, setFormData] = useState({
         title: '',
@@ -85,7 +85,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
             </h2>
 
             <div className="space-y-4">
-                {/* Title */}
                 <div className="form-group">
                     <label className="form-label">
                         Title *
@@ -103,7 +102,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* Description */}
                 <div className="form-group">
                     <label className="form-label">
                         Description *
@@ -121,7 +119,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* Start Date */}
                 <div className="form-group">
                     <label className="form-label">
                         Start Date *
@@ -138,7 +135,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* End Date */}
                 <div className="form-group">
                     <label className="form-label">
                         End Date
@@ -152,7 +148,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     />
                 </div>
 
-                {/* Status */}
                 <div className="form-group">
                     <label className="form-label">
                         Status
@@ -171,7 +166,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     </select>
                 </div>
 
-                {/* Principal Researcher */}
                 <div className="form-group">
                     <label className="form-label">
                         Principal Researcher *
@@ -204,7 +198,8 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                 </div>
             </div>
 
-            {/* Buttons */}
+            {children}
+
             <div className="form-actions">
                 <button
                     type="submit"
