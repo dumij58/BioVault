@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { researcherApi } from '../../service/researcherApi';
 import '../../pages/ResearchProjectPage.css';
-const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing, children }) => {
+const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
     const { user } = useAuth();
     const [formData, setFormData] = useState({
         title: '',
@@ -197,8 +197,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing, children 
                     )}
                 </div>
             </div>
-
-            {children}
 
             <div className="form-actions">
                 <button

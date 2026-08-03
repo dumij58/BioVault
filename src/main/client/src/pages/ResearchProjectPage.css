@@ -372,6 +372,12 @@
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
+.form-input[readonly] {
+    background: #f1f5f9;
+    color: #475569;
+    cursor: not-allowed;
+}
+
 /* Select dropdown */
 select.form-input {
     appearance: none;
