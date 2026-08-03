@@ -9,7 +9,7 @@ public class Researcher {
     private String id;
     private String name;
     private String email;
-    private String department;
+    private String institution;
     private String designation;
 
     public String getId() {
@@ -36,12 +36,12 @@ public class Researcher {
         this.email = email;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public String getDesignation() {
@@ -57,12 +57,12 @@ public class Researcher {
 
     public Researcher(String name,
                       String email,
-                      String department,
+                      String institution,
                       String designation) {
 
         this.name = name;
         this.email = email;
-        this.department = department;
+        this.institution = institution;
         this.designation = designation;
     }
 }
