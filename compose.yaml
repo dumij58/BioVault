@@ -6,8 +6,9 @@ services:
     ports:
       - '8080:8080'
     environment:
-      - 'SECURITY_USERNAME=${SECURITY_USERNAME:-admin}'
-      - 'SECURITY_PASSWORD=${SECURITY_PASSWORD:-admin123}'
+      - 'ADMIN_NAME=${ADMIN_NAME:-System Administrator}'
+      - 'ADMIN_EMAIL=${ADMIN_EMAIL:-admin@biovault.com}'
+      - 'ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}'
       - 'MONGODB_DATABASE=${MONGODB_DATABASE:-biovault-db}'
       - 'MONGODB_URI=${MONGODB_URI:-mongodb://root:secret@mongodb:27017}'
     depends_on:

@@ -6,12 +6,11 @@ import './login.css';
 function Auth({ onGoHome, onGoRegistration, onGoSequence }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userRole, setUserRole] = useState('guest');
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Static credential vault configuration mappings
     const credentials = {
-        student: { email: 'student@school.com', password: 'student123' },
-        manager: { email: 'manager@lab.com', password: 'manager123' },
+        researcher: { email: 'Researcher@school.com', password: 'researcher123' },
         admin: { email: 'admin@system.com', password: 'admin123' }
     };
 
@@ -19,22 +18,27 @@ function Auth({ onGoHome, onGoRegistration, onGoSequence }) {
         e.preventDefault();
         setErrorMessage('');
 
-        if (email === credentials.student.email && password === credentials.student.password) {
-            setUserRole('student');
-        } else if (email === credentials.manager.email && password === credentials.manager.password) {
-            setUserRole('manager');
-        } else if (email === credentials.admin.email && password === credentials.admin.password) {
-            setUserRole('admin');
+        // 2. Validate user role matching parameters
+        if (email === credentials.researcher.email && password === credentials.researcher.password) {
+            // Clear input forms safely on success
+            clearForm();
+            // Signal to App.jsx that a Researcher successfully logged in
+            if (onLoginSuccess) onLoginSuccess('researcher');
+            
+        }  else if (email === credentials.admin.email && password === credentials.admin.password) {
+            clearForm();
+            // Signal to App.jsx that an Admin successfully logged in
+            if (onLoginSuccess) onLoginSuccess('admin');
+            
         } else {
             setErrorMessage('Invalid email or password! Please try again.');
         }
     };
 
-    const handleLogout = () => {
-        setUserRole('guest');
+    const clearForm = () => {
         setEmail('');
         setPassword('');
-        if (onGoHome) onGoHome();
+        setErrorMessage('');
     };
 
     if (userRole === 'student') {
