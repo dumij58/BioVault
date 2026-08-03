@@ -5,7 +5,7 @@ import ResearchProjectForm from '../components/researchProject/ResearchProjectFo
 import SampleListEditor from '../components/researchProject/SampleListEditor';
 import SequenceListEditor from '../components/researchProject/SequenceListEditor';
 import { researchProjectApi } from '../service/researchProjectApi';
-import { sampleApi } from '../service/sampleApi';
+import { createSample } from '../service/sampleApi';
 import { saveSequenceApi } from '../service/sequenceApi';
 import { sequenceTypeService } from '../service/sequenceTypeService';
 import { getStorageLocations } from '../service/storageLocationService';
@@ -53,7 +53,7 @@ const AddProjectPage = ({ onGoBack }) => {
         let saved = [];
         try {
             const results = await Promise.allSettled(
-                validSamples.map((sample) => sampleApi.create({ ...sample, projectId: createdProject.id }))
+                validSamples.map((sample) => createSample({ ...sample, projectId: createdProject.id }))
             );
 
             saved = results.filter((result) => result.status === 'fulfilled').map((result) => result.value);
