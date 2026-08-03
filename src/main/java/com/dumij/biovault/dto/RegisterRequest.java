@@ -51,7 +51,7 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public String getInstitutionId() {
+    public String getInstitution() {
         return institution;
     }
 

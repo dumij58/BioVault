@@ -18,11 +18,11 @@ public class User {
     }
 
     public User(String name,
-                String email,
-                String password,
-                Role role,
-                String institution,
-                String designation) {
+            String email,
+            String password,
+            Role role,
+            String institution,
+            String designation) {
 
         this.name = name;
         this.email = email;

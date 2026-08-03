@@ -41,9 +41,7 @@ public class DefaultResearcherService implements ResearcherService {
 
         Researcher researcher = researcherRepository
                 .findById(id)
-                .orElseThrow(() ->
-                        new ResearcherNotFoundException("Researcher not found.")
-                );
+                .orElseThrow(() -> new ResearcherNotFoundException("Researcher not found."));
 
         researcherRepository.delete(researcher);
     }
@@ -53,19 +51,15 @@ public class DefaultResearcherService implements ResearcherService {
 
         Researcher existingResearcher = researcherRepository
                 .findById(id)
-                .orElseThrow(() ->
-                        new ResearcherNotFoundException(
-                                "Researcher not found."
-                        ));
+                .orElseThrow(() -> new ResearcherNotFoundException(
+                        "Researcher not found."));
 
         existingResearcher.setName(researcher.getName());
         existingResearcher.setEmail(researcher.getEmail());
-        existingResearcher.setDepartment(researcher.getDepartment());
+        existingResearcher.setInstitution(researcher.getInstitution());
         existingResearcher.setDesignation(researcher.getDesignation());
 
         return researcherRepository.save(existingResearcher);
     }
-
-
 
 }

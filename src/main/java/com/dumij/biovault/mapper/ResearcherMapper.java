@@ -12,9 +12,8 @@ public class ResearcherMapper {
         return new Researcher(
                 request.getName(),
                 request.getEmail(),
-                request.getDepartment(),
-                request.getDesignation()
-        );
+                request.getInstitution(),
+                request.getDesignation());
     }
 
     public static ResearcherResponse toResponse(Researcher researcher) {
@@ -23,9 +22,8 @@ public class ResearcherMapper {
                 researcher.getId(),
                 researcher.getName(),
                 researcher.getEmail(),
-                researcher.getDepartment(),
-                researcher.getDesignation()
-        );
+                researcher.getInstitution(),
+                researcher.getDesignation());
     }
 
     public static List<ResearcherResponse> toResponseList(

@@ -14,9 +14,8 @@ public class UserMapper {
                 request.getEmail(),
                 encodedPassword,
                 Role.RESEARCHER,
-                request.getInstitutionId(),
-                request.getDesignation()
-        );
+                request.getInstitution(),
+                request.getDesignation());
     }
 
     public static UserResponse toResponse(User user) {
@@ -27,7 +26,6 @@ public class UserMapper {
                 user.getEmail(),
                 user.getRole(),
                 user.getInstitution(),
-                user.getDesignation()
-        );
+                user.getDesignation());
     }
 }

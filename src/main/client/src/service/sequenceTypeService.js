@@ -1,7 +1,7 @@
-// Base path matches your working Spring Boot REST controller mappings
-import {getAuthHeader} from "./authHeader.js";
+import { Env } from "../config/Env";
+import { getAuthHeader } from "./authHeader.js";
 
-const API_BASE_URL = '/api/v1/sequence-types';
+const API_BASE_URL = `${Env.API_BASE_URL}/sequence-types`;
 
 const parseErrorMessage = async (res, fallbackMessage) => {
   try {
@@ -22,7 +22,7 @@ const parseErrorMessage = async (res, fallbackMessage) => {
 export const sequenceTypeService = {
   // Read All
   getAll: async () => {
-    const res = await fetch(API_BASE_URL,{
+    const res = await fetch(API_BASE_URL, {
       headers: getAuthHeader()
     });
     if (!res.ok) {
@@ -35,7 +35,8 @@ export const sequenceTypeService = {
   create: async (data) => {
     const res = await fetch(API_BASE_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
         ...getAuthHeader()
       },
       body: JSON.stringify(data),
@@ -50,7 +51,8 @@ export const sequenceTypeService = {
   update: async (id, data) => {
     const res = await fetch(`${API_BASE_URL}/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
         ...getAuthHeader()
       },
       body: JSON.stringify(data),

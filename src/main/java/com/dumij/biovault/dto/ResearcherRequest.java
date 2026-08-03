@@ -24,13 +24,13 @@ public class ResearcherRequest {
     }
 
     public ResearcherRequest(String name,
-                             String email,
-                             String department,
-                             String designation) {
+            String email,
+            String institution,
+            String designation) {
 
         this.name = name;
         this.email = email;
-        this.department = department;
+        this.department = institution;
         this.designation = designation;
     }
 
@@ -50,12 +50,12 @@ public class ResearcherRequest {
         this.email = email;
     }
 
-    public String getDepartment() {
+    public String getInstitution() {
         return department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setInstitution(String institution) {
+        this.department = institution;
     }
 
     public String getDesignation() {
