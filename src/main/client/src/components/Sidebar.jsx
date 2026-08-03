@@ -4,17 +4,23 @@ import './Sidebar.css';
 export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, currentView, onViewChange, onLogout }) {
   // Define navigation layout menus dynamically per user group clearance level
   const researcherMenu = [
-    { id: 'overview', label: 'Analysis Dashboard', icon: '📊' },
-    { id: 'seq-types', label: 'Sequence Types', icon: '🧬' },
-    { id: 'projects', label: 'Research Projects', icon: '📁' },
+    { id: 'overview', label: 'Analysis Dashboard' },
+    { id: 'seq-types', label: 'Sequence Types' },
+    { id: 'projects', label: 'Research Projects' },
+    { id: 'storage', label: 'Storage Locations' },
+    { id: 'sequence', label: 'Sequence Console' },
+    {id: 'samples', label: 'Sample List' }
   ];
 
   const adminMenu = [
-    { id: 'overview', label: 'System Overview', icon: '🛡️' },
-    { id: 'users', label: 'User Management', icon: '👥' },
-    { id: 'seq-types', label: 'Sequence Types', icon: '⚙️' },
-    { id: 'logs', label: 'Audit Telemetry', icon: '📜' },
-  ];
+  { id: 'overview', label: 'System Overview' },
+  { id: 'institutions', label: 'User Institutions' }, // Matches view actions
+  { id: 'projects', label: 'Research Projects' },    // Matches view actions
+  { id: 'sequence', label: 'Sequence Console' },     // Matches view actions
+  { id: 'sequence-types', label: 'Sequence Types' }, // Matches view actions
+  { id: 'storage', label: 'Storage Locations' },     // Matches view actions
+];
+
 
   const activeMenu = currentRole === 'admin' ? adminMenu : researcherMenu;
 
@@ -58,17 +64,9 @@ export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, cu
 
         {/* Workspace Quick-Switch Action Footer Links */}
         <footer className="sidebar-drawer__footer">
-          <button 
-            className="sidebar-drawer__toggle-btn"
-            onClick={() => {
-              onRoleSwitch(currentRole === 'admin' ? 'researcher' : 'admin');
-              onClose();
-            }}
-          >
-            🔄 Switch to {currentRole === 'admin' ? 'Researcher' : 'Admin'}
-          </button>
+          
           <button className="sidebar-drawer__logout-btn" onClick={onLogout}>
-            🚪 Terminate Session
+            Logout
           </button>
         </footer>
       </aside>

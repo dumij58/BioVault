@@ -1,0 +1,229 @@
+/* Container Layout */
+.seq-mgmt {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: 100vh;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #ffffff;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Glassmorphic Panel Layouts */
+.seq-mgmt__topbar,
+.seq-mgmt__card,
+.seq-mgmt__table-container {
+    border: 1px solid rgba(181, 196, 255, 0.14);
+    border-radius: 24px;
+    background: rgba(10, 16, 40, 0.56);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(18px);
+    padding: 1.5rem;
+}
+
+.seq-mgmt__topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+}
+
+.seq-mgmt__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(135deg, #ffffff, #9eb8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.seq-mgmt__subtitle {
+    margin: 0.35rem 0 0 0;
+    color: rgba(237, 242, 255, 0.72);
+    font-size: 0.92rem;
+}
+
+.seq-mgmt__section-title {
+    margin: 0 0 1.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #edf2ff;
+}
+
+/* Form Styles */
+.seq-mgmt__form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    align-items: flex-end;
+}
+
+.seq-mgmt__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.seq-mgmt__form-group--submit {
+    grid-column: span 1;
+}
+
+.seq-mgmt__form-group label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.76rem;
+    color: #9eb8ff;
+    font-weight: 600;
+}
+
+.seq-mgmt__input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(181, 196, 255, 0.15);
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    color: #fff;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.seq-mgmt__input:focus {
+    border-color: #6e8cff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Calendar icon styling for dark mode date inputs */
+.seq-mgmt__input--date::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
+
+/* Action Buttons */
+.seq-mgmt__submit-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 0.85rem 1.5rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6e8cff, #5f41e4);
+    color: #fff;
+    box-shadow: 0 18px 32px rgba(42, 61, 147, 0.3);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    height: 48px;
+    width: 100%;
+}
+
+.seq-mgmt__submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 36px rgba(42, 61, 147, 0.4);
+}
+
+/* Table Container & Layout */
+.seq-mgmt__table-container {
+    padding: 0;
+    overflow: hidden;
+}
+
+.seq-mgmt__table-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(181, 196, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.seq-mgmt__table-header .seq-mgmt__section-title {
+    margin: 0;
+}
+
+.seq-mgmt__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.seq-mgmt__table th {
+    padding: 1.1rem 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.76rem;
+    color: #9eb8ff;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(181, 196, 255, 0.15);
+}
+
+.seq-mgmt__table td {
+    padding: 1.2rem 1.25rem;
+    border-bottom: 1px solid rgba(181, 196, 255, 0.08);
+}
+
+.seq-mgmt__table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.seq-mgmt__table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.seq-mgmt__id {
+    font-family: monospace;
+    font-size: 0.82rem;
+    color: #9eb8ff;
+}
+
+.seq-mgmt__name {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.seq-mgmt__desc {
+    color: rgba(237, 242, 255, 0.72);
+}
+
+/* Delete Button */
+.seq-mgmt__delete-btn {
+    background: rgba(255, 110, 110, 0.1);
+    border: 1px solid rgba(255, 110, 110, 0.25);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #ff6e6e;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.18s ease;
+}
+
+.seq-mgmt__delete-btn:hover {
+    background: rgba(255, 110, 110, 0.2);
+    border-color: rgba(255, 110, 110, 0.4);
+    transform: translateY(-1px);
+}
+
+.seq-mgmt__empty {
+    text-align: center;
+    padding: 3rem;
+    color: rgba(237, 242, 255, 0.4);
+    margin: 0;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .seq-mgmt {
+        padding: 1rem;
+    }
+
+    .seq-mgmt__topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .seq-mgmt__table-container {
+        overflow-x: auto;
+    }
+}

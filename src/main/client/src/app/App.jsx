@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
@@ -10,15 +10,33 @@ import ResearchProjectPage from "../pages/ResearchProjectPage"
 import SequenceTypePage from "../pages/SequenceTypePage"
 import ResearcherDashboard from '../pages/ResearcherDashboard'
 import AdminDashboard from '../pages/AdminDashboard'
+import SampleList from '../pages/SampleList'
 import { useAuth } from '../context/AuthContext'
+
+const normalizeRole = (role) => {
+  if (!role) return '';
+  if (typeof role === 'string') return role.toUpperCase();
+  if (typeof role === 'object') {
+    if (typeof role.name === 'string') return role.name.toUpperCase();
+    if (typeof role.role === 'string') return role.role.toUpperCase();
+  }
+  return String(role).toUpperCase();
+};
+
+const getPageForRole = (role) => {
+  const normalizedRole = normalizeRole(role);
+  if (normalizedRole === 'ADMIN') return 'adminDashboard';
+  if (normalizedRole === 'RESEARCHER') return 'researcherDashboard';
+  return 'home';
+};
 
 export function App() {
   const { user, logout } = useAuth();
-  const [page, setPage] = useState(() => {
-    if (user?.role === 'ADMIN') return 'adminDashboard';
-    if (user?.role === 'RESEARCHER') return 'researcherDashboard';
-    return 'home';
-  });
+  const [page, setPage] = useState(() => getPageForRole(user?.role));
+
+  useEffect(() => {
+    setPage(getPageForRole(user?.role));
+  }, [user?.role]);
 
   const navigateTo = (nextPage) => {
     if (nextPage === page) {
@@ -28,13 +46,13 @@ export function App() {
   };
 
   const navigateBack = () => {
-    if (user?.role === 'ADMIN') return navigateTo('adminDashboard');
-    if (user?.role === 'RESEARCHER') return navigateTo('researcherDashboard');
+    const pageForRole = getPageForRole(user?.role);
+    if (pageForRole !== 'home') return navigateTo(pageForRole);
     navigateTo('home');
   };
 
   const handleLoginSuccess = (loggedInUser) => {
-    navigateTo(loggedInUser.role === 'ADMIN' ? 'adminDashboard' : 'researcherDashboard');
+    navigateTo(getPageForRole(loggedInUser.role));
   };
 
   const handleLogout = () => {
@@ -55,6 +73,7 @@ export function App() {
             onProjectsClick={() => navigateTo("projects")}
             onStorageClick={() => navigateTo('storageLocation')}
             onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
           />
         )}
         {page === 'auth' && (
@@ -107,7 +126,14 @@ export function App() {
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
             onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
             onLogout={handleLogout}
+          />
+        )}
+
+        {page === 'samples' && (
+          <SampleList
+            onGoHome={navigateBack}
           />
         )}
 
