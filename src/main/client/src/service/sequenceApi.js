@@ -13,6 +13,7 @@ export async function pingApi() {
 
 const sequenceBaseUrl = `${Env.API_BASE_URL}/sequence`;
 const sequenceTypeBaseUrl = `${Env.API_BASE_URL}/sequencetype`;
+const sampleBaseUrl = `${Env.API_BASE_URL}/samples`;
 
 async function parseJsonResponse(response, fallbackMessage) {
     if (!response.ok) {
@@ -29,27 +30,27 @@ export async function listSequencesApi() {
     return parseJsonResponse(response, "Failed to fetch sequences");
 }
 
-export async function saveSequenceApi(name, sequence, seqLength = null, seqType = null) {
+export async function saveSequenceApi(name, sequence, seqLength = null, seqTypeId = null, sampleId = null) {
     const response = await fetch(`${sequenceBaseUrl}/save`, {
         method: "POST",
         headers: {
             ...getAuthHeader(),
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, sequence, seqLength, seqType }),
+        body: JSON.stringify({ name, sequence, seqLength, seqTypeId, sampleId }),
     });
 
     return parseJsonResponse(response, "Failed to save sequence");
 }
 
-export async function updateSequenceApi(id, name, sequence, seqLength = null, seqType = null) {
+export async function updateSequenceApi(id, name, sequence, seqLength = null, seqTypeId = null, sampleId = null) {
     const response = await fetch(`${sequenceBaseUrl}/update/${id}`, {
         method: "PUT",
         headers: {
             ...getAuthHeader(),
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, sequence, seqLength, seqType }),
+        body: JSON.stringify({ name, sequence, seqLength, seqTypeId, sampleId }),
     });
 
     return parseJsonResponse(response, "Failed to update sequence");
@@ -84,4 +85,11 @@ export async function deleteSequenceApi(id) {
     if (!response.ok) {
         throw new Error(`Failed to delete sequence (status ${response.status})`);
     }
+}
+
+export async function listSamplesApi() {
+    const response = await fetch(sampleBaseUrl, {
+        headers: getAuthHeader()
+    });
+    return parseJsonResponse(response, "Failed to fetch samples");
 }

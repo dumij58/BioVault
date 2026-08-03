@@ -1,8 +1,11 @@
 // client/src/components/researchProject/ResearchProjectForm.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { researcherApi } from '../../service/researcherApi';
 import '../../pages/ResearchProjectPage.css';
 const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
+    const { user } = useAuth();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -13,12 +16,32 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
     });
 
     const [errors, setErrors] = useState({});
+    const [researchers, setResearchers] = useState([]);
+    const hasAutoFilled = useRef(false);
 
     useEffect(() => {
         if (project) {
             setFormData(project);
         }
     }, [project]);
+
+    useEffect(() => {
+        researcherApi.getAll()
+            .then(setResearchers)
+            .catch((error) => console.error('Failed to fetch researchers:', error));
+    }, []);
+
+    // Default the principal researcher to the logged-in user's matching record, once.
+    useEffect(() => {
+        if (hasAutoFilled.current || isEditing || !user?.email || researchers.length === 0) {
+            return;
+        }
+        hasAutoFilled.current = true;
+        const match = researchers.find((r) => r.email === user.email);
+        if (match) {
+            setFormData((prev) => (prev.principalResearcherId ? prev : { ...prev, principalResearcherId: match.id }));
+        }
+    }, [researchers, isEditing, user]);
 
     const validate = () => {
         const newErrors = {};
@@ -62,7 +85,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
             </h2>
 
             <div className="space-y-4">
-                {/* Title */}
                 <div className="form-group">
                     <label className="form-label">
                         Title *
@@ -80,7 +102,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* Description */}
                 <div className="form-group">
                     <label className="form-label">
                         Description *
@@ -98,7 +119,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* Start Date */}
                 <div className="form-group">
                     <label className="form-label">
                         Start Date *
@@ -115,7 +135,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     )}
                 </div>
 
-                {/* End Date */}
                 <div className="form-group">
                     <label className="form-label">
                         End Date
@@ -129,7 +148,6 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     />
                 </div>
 
-                {/* Status */}
                 <div className="form-group">
                     <label className="form-label">
                         Status
@@ -148,26 +166,38 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
                     </select>
                 </div>
 
-                {/* Principal Researcher ID */}
                 <div className="form-group">
                     <label className="form-label">
-                        Principal Researcher ID *
+                        Principal Researcher *
                     </label>
-                    <input
-                        type="text"
-                        name="principalResearcherId"
-                        value={formData.principalResearcherId}
-                        onChange={handleChange}
-                        className={`form-input ${errors.principalResearcherId ? 'form-input-error' : ''}`}
-                        placeholder="Enter researcher ID"
-                    />
+                    <div className="form-inline-group">
+                        <select
+                            name="principalResearcherId"
+                            value={formData.principalResearcherId}
+                            onChange={handleChange}
+                            className={`form-input ${errors.principalResearcherId ? 'form-input-error' : ''}`}
+                        >
+                            <option value="">-- Select Researcher --</option>
+                            {researchers.map((r) => (
+                                <option key={r.id} value={r.id}>{r.name} ({r.email})</option>
+                            ))}
+                        </select>
+                        {formData.principalResearcherId && (
+                            <button
+                                type="button"
+                                className="form-clear-button"
+                                onClick={() => setFormData((prev) => ({ ...prev, principalResearcherId: '' }))}
+                            >
+                                Remove
+                            </button>
+                        )}
+                    </div>
                     {errors.principalResearcherId && (
                         <p className="form-error">{errors.principalResearcherId}</p>
                     )}
                 </div>
             </div>
 
-            {/* Buttons */}
             <div className="form-actions">
                 <button
                     type="submit"

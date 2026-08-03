@@ -3,7 +3,7 @@ import './home.css';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 
-function ResearcherDashboard({ onProjectsClick, onSequenceClick, onStorageClick, onSequenceTypeClick, onSampleListClick, onLogout }) {
+function ResearcherDashboard({ onProjectsClick, onAddProjectClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick }) {
     const { user } = useAuth();
     // State to control whether the sidebar panel drawer is open
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -67,7 +67,12 @@ function ResearcherDashboard({ onProjectsClick, onSequenceClick, onStorageClick,
                 <div className="home__hero-copy">
                     <p className="home__eyebrow">Welcome back</p>
                     <h1>Manage your research projects, samples, and sequences.</h1>
-                    
+                    <p className="home__lead">
+                        Use the shortcuts above to jump into your active work.
+                    </p>
+                    <div className="home__cta-row">
+                        <button type="button" className="home__primary-button" onClick={onAddProjectClick}>+ Add Project</button>
+                    </div>
                 </div>
             </div>
         </section>

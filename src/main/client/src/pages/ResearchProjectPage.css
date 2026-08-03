@@ -372,6 +372,12 @@
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
+.form-input[readonly] {
+    background: #f1f5f9;
+    color: #475569;
+    cursor: not-allowed;
+}
+
 /* Select dropdown */
 select.form-input {
     appearance: none;
@@ -404,6 +410,34 @@ input[type="date"].form-input::-webkit-calendar-picker-indicator {
 
 input[type="date"].form-input::-webkit-calendar-picker-indicator:hover {
     opacity: 1;
+}
+
+.form-inline-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.form-inline-group .form-input {
+    flex: 1;
+}
+
+.form-clear-button {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 2px solid #fecaca;
+    padding: 0.65rem 1.1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.form-clear-button:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
 }
 
 .form-error {
@@ -466,6 +500,89 @@ input[type="date"].form-input::-webkit-calendar-picker-indicator:hover {
 .form-cancel:hover {
     background: #cbd5e1;
 }
+
+.sample-list-editor {
+    margin: 1.5rem 0;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f1f5f9;
+}
+
+.sample-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sample-list-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 0;
+}
+
+.sample-add-button {
+    background: #eff6ff;
+    color: #1a56db;
+    border: 2px solid #bfdbfe;
+    padding: 0.5rem 1.1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sample-add-button:hover {
+    background: #dbeafe;
+    border-color: #1a56db;
+}
+
+.sample-list-empty {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0 0 1rem 0;
+}
+
+.sample-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.sample-row-fields {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+}
+
+.sample-row-fields .form-group {
+    margin-bottom: 0;
+}
+
+.sample-remove-button {
+    margin-top: 1.6rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .sample-row {
+        flex-direction: column;
+    }
+
+    .sample-remove-button {
+        margin-top: 0;
+        width: 100%;
+    }
+}
+
 
 .detail-container {
     max-width: 700px;
