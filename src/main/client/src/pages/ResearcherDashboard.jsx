@@ -3,34 +3,28 @@ import './home.css';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 
-function ResearcherDashboard({ onProjectsClick, onAddProjectClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick }) {
+function ResearcherDashboard({ onProjectsClick, onAddProjectClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick, onSampleListClick, onResearchersClick }) {
     const { user } = useAuth();
-    // State to control whether the sidebar panel drawer is open
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // Track the active dashboard body view content frame
     const [currentView, setCurrentView] = useState('overview');
 
-    // Handle view switching inside the sidebar
     const handleViewChange = (viewId) => {
         setCurrentView(viewId);
         
-        // Map the sidebar button selections back to your dashboard event triggers
+        if (viewId === 'researchers') onResearchersClick?.(); 
         if (viewId === 'projects') onProjectsClick?.();
-        if (viewId === 'sequence') onSequenceClick?.();
-        if (viewId === 'storage') onStorageClick?.();
         if (viewId === 'samples' || viewId === 'sampleList') onSampleListClick?.();
-        // Support both id variants used across the UI
+        if (viewId === 'storage') onStorageClick?.();
+        if (viewId === 'sequence') onSequenceClick?.();
         if (viewId === 'seq-types' || viewId === 'sequence-types') onSequenceTypeClick?.();
     };
 
-    // Dummy placeholder handler for switching roles 
     const handleRoleSwitch = (newRole) => {
         console.log(`Switching session authorization layer context to: ${newRole}`);
     };
 
     return (
         <section className="home">
-            {/* Embedded Reusable Sidebar Component Drawer Context Wrapper */}
             <Sidebar 
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
@@ -42,9 +36,7 @@ function ResearcherDashboard({ onProjectsClick, onAddProjectClick, onSequenceCli
             />
 
             <header className="home__topbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* Stack the button vertically on top of the text branding */}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px' }}>
-                    {/* Trigger Button positioned directly on top */}
                     <button 
                         type="button" 
                         className="home__menu-toggle-btn"

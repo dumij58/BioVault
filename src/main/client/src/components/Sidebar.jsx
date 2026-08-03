@@ -1,8 +1,10 @@
 import React from 'react';
 import './Sidebar.css';
+import { useAuth } from '../context/AuthContext';
 
 export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, currentView, onViewChange, onLogout }) {
-  // Define navigation layout menus dynamically per user group clearance level
+  const { user } = useAuth();
+
   const researcherMenu = [
     { id: 'overview', label: 'Analysis Dashboard' },
     { id: 'seq-types', label: 'Sequence Types' },
@@ -14,11 +16,13 @@ export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, cu
 
   const adminMenu = [
   { id: 'overview', label: 'System Overview' },
-  { id: 'institutions', label: 'User Institutions' }, // Matches view actions
-  { id: 'projects', label: 'Research Projects' },    // Matches view actions
-  { id: 'sequence', label: 'Sequence Console' },     // Matches view actions
-  { id: 'sequence-types', label: 'Sequence Types' }, // Matches view actions
-  { id: 'storage', label: 'Storage Locations' },     // Matches view actions
+  { id: 'institutions', label: 'Institutions' },
+  { id: 'researchers', label: 'Researchers' },
+  { id: 'projects', label: 'Research Projects' },
+  { id: 'samples', label: 'Sample List' },
+  { id: 'sequence', label: 'Sequence Console' },
+  { id: 'sequence-types', label: 'Sequence Types' },
+  { id: 'storage', label: 'Storage Locations' },
 ];
 
 
@@ -26,10 +30,8 @@ export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, cu
 
   return (
     <>
-      {/* Background Dimming Backdrop overlay */}
       {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
 
-      {/* Main Drawer Slide Panel */}
       <aside className={`sidebar-drawer ${isOpen ? 'sidebar-drawer--open' : ''}`}>
         <div className="sidebar-drawer__header">
           <div className="sidebar-drawer__profile">
@@ -37,14 +39,13 @@ export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, cu
               {currentRole === 'admin' ? 'A' : 'R'}
             </div>
             <div>
-              <h4 className="sidebar-drawer__user-name">Dr. Dumij Vault</h4>
+              <h4 className="sidebar-drawer__user-name">{currentRole === 'admin' ? `${user?.email || 'Unknown Administrator'}` : `${user?.name || 'Unknown User'}`}</h4>
               <span className="sidebar-drawer__role-badge">{currentRole}</span>
             </div>
           </div>
           <button className="sidebar-drawer__close-btn" onClick={onClose}>×</button>
         </div>
 
-        {/* Dynamic Navigation Items */}
         <nav className="sidebar-drawer__nav">
           <p className="sidebar-drawer__section-title">Navigation Ledger</p>
           {activeMenu.map((item) => (
@@ -62,7 +63,6 @@ export default function Sidebar({ isOpen, onClose, currentRole, onRoleSwitch, cu
           ))}
         </nav>
 
-        {/* Workspace Quick-Switch Action Footer Links */}
         <footer className="sidebar-drawer__footer">
           
           <button className="sidebar-drawer__logout-btn" onClick={onLogout}>

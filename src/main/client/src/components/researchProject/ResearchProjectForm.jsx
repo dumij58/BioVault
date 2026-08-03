@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { researcherApi } from '../../service/researcherApi';
 import '../../pages/ResearchProjectPage.css';
+
 const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
     const { user } = useAuth();
     const [formData, setFormData] = useState({
@@ -37,7 +38,8 @@ const ResearchProjectForm = ({ project, onSubmit, onCancel, isEditing }) => {
             return;
         }
         hasAutoFilled.current = true;
-        const match = researchers.find((r) => r.email === user.email);
+        const userEmail = user.email.trim().toLowerCase();
+        const match = researchers.find((r) => r.email?.trim().toLowerCase() === userEmail);
         if (match) {
             setFormData((prev) => (prev.principalResearcherId ? prev : { ...prev, principalResearcherId: match.id }));
         }
