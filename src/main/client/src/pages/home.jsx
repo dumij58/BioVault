@@ -4,8 +4,8 @@ function Home({ onLoginClick, onRegisterClick }) {
   return (
     <section className="home">
       <header className="home__topbar">
-        <div>
-          <p className="home__brand">BioVault</p>
+        <div className="home__brand-group">
+          <h2 className="home__brand">BioVault</h2>
           <span className="home__brand-copy">Research Sample and Biological Sequence Repository.</span>
         </div>
         <div className="home__nav-actions">
@@ -64,15 +64,41 @@ function Home({ onLoginClick, onRegisterClick }) {
 
       <section className="home__highlights">
         <article className="home__highlight-card">
-          <h3>Sample Tracking</h3>
+          <div className="home__highlight-header">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="home__highlight-icon">
+              <path d="M6 18h8" />
+              <path d="M3 22h18" />
+              <path d="M14 22a7 7 0 1 0-14 0" />
+              <path d="M9 14l2-2" />
+              <path d="M12 6l3 3-6.5 6.5a2.12 2.12 0 0 1-3 0 2.12 2.12 0 0 1 0-3L12 6z" />
+              <path d="M15 3l3 3" />
+            </svg>
+            <h3>Sample Tracking</h3>
+          </div>
           <p>Log species types, collection timelines, and map exact repository links back to active research projects.</p>
         </article>
         <article className="home__highlight-card">
-          <h3>Sequence Management</h3>
+          <div className="home__highlight-header">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="home__highlight-icon">
+              <path d="M2 15c6.667-6 13.333 0 20-6" />
+              <path d="M2 9c6.667 6 13.333 0 20 6" />
+              <path d="M6 12v3" />
+              <path d="M10 9.5v5" />
+              <path d="M14 9.5v5" />
+              <path d="M18 9v3" />
+            </svg>
+            <h3>Sequence Management</h3>
+          </div>
           <p>Store nucleic acid and protein strings securely alongside auto-calculated metrics ready for downstream tools.</p>
         </article>
         <article className="home__highlight-card">
-          <h3>Storage Mapping</h3>
+          <div className="home__highlight-header">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="home__highlight-icon">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <h3>Storage Mapping</h3>
+          </div>
           <p>Pinpoint locations across institutions down to the precise building, laboratory, freezer, shelf, and box numbers.</p>
         </article>
       </section>
