@@ -27,6 +27,12 @@ export function App() {
     setPage(nextPage);
   };
 
+  const navigateBack = () => {
+    if (user?.role === 'ADMIN') return navigateTo('adminDashboard');
+    if (user?.role === 'RESEARCHER') return navigateTo('researcherDashboard');
+    navigateTo('home');
+  };
+
   const handleLoginSuccess = (loggedInUser) => {
     navigateTo(loggedInUser.role === 'ADMIN' ? 'adminDashboard' : 'researcherDashboard');
   };
@@ -38,17 +44,6 @@ export function App() {
 
   return (
     <div className="app-shell">
-      {/* 2. Global Navigation Header for testing your integration routes (Kept exactly as requested) */}
-      <nav style={{ padding: '12px', background: '#222', color: '#fff', display: 'flex', gap: '15px', alignItems: 'center' }}>
-        <button onClick={() => navigateTo('home')} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}>Home</button>
-        <button onClick={() => navigateTo('storageLocation')} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}>Storage Locations</button>
-        <button onClick={() => navigateTo('sequenceType')} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontWeight: page === 'sequenceType' ? 'bold' : 'normal' }}>Sequence Types (Isolated)</button>
-        <div style={{ marginLeft: 'auto', display: 'flex', gap: '10px' }}>
-          <button onClick={() => navigateTo('auth')} style={{ background: '#5f41e4', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer' }}>🧪 Test Login Gate</button>
-          {page === 'dashboard' && <button onClick={handleLogout} style={{ background: '#ff6e6e', color: '#fff', border: 'none', padding: '4px 10px', borderRadius: '6px', cursor: 'pointer' }}>🚪 Dev Logout</button>}
-        </div>
-      </nav>
-
       <main className={`page-shell page-shell--${page}`}>
 
         {page === 'home' && (
@@ -77,31 +72,31 @@ export function App() {
         
         {page === 'sequence' && (
           <Sequence
-            onGoHome={() => navigateTo('home')}
+            onGoHome={navigateBack}
           />
         )}
 
         {page === 'institutions' && (
           <InstitutionManagement 
-            onGoHome={() => navigateTo('home')}
+            onGoHome={navigateBack}
           />
         )}
 
         {page === 'projects' && (
           <ResearchProjectPage
-            onGoHome={() => navigateTo('home')}
+            onGoHome={navigateBack}
           />
         )}
         
         {page === 'storageLocation' && (
           <StorageLocation
-            onGoHome={() => navigateTo('home')}
+            onGoHome={navigateBack}
           />
         )}
         
         {page === 'sequenceType' && (
             <SequenceTypePage
-                onGoHome={() => navigateTo('home')}
+                onGoHome={navigateBack}
             />
         )}
         

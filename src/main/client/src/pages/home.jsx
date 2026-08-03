@@ -1,19 +1,12 @@
 import './home.css';
 
-function Home({ onLoginClick, onRegisterClick, onStorageClick, onProjectsClick, onInstitutionsClick, onSequenceClick }) {
+function Home({ onLoginClick, onRegisterClick }) {
   return (
     <section className="home">
       <header className="home__topbar">
         <div>
           <p className="home__brand">BioVault</p>
           <span className="home__brand-copy">Research Sample and Biological Sequence Repository.</span>
-        </div>
-
-        <div className="home__nav-actions">
-          <button type="button" className="home__ghost-button" onClick={onSequenceClick}>Sequence Console</button>
-          <button type="button" className="home__ghost-button" onClick={onInstitutionsClick}>Institutions</button>
-          <button type="button" className="home__ghost-button" onClick={onProjectsClick}>Research Projects</button>
-          <button type="button" className="home__ghost-button" onClick={onStorageClick}>Storage Locations</button>
         </div>
         <div className="home__nav-actions">
           <button type="button" className="home__ghost-button" onClick={onLoginClick}>Login</button>
@@ -32,7 +25,6 @@ function Home({ onLoginClick, onRegisterClick, onStorageClick, onProjectsClick, 
           <div className="home__cta-row">
             <button type="button" className="home__primary-button" onClick={onLoginClick}>Login</button>
             <button type="button" className="home__ghost-button" onClick={onRegisterClick}>Register</button>
-
           </div>
 
           <div className="home__stats">
