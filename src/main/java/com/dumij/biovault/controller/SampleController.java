@@ -2,7 +2,6 @@ package com.dumij.biovault.controller;
 
 import com.dumij.biovault.model.Sample;
 import com.dumij.biovault.service.SampleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class SampleController {
 
-    @Autowired
-    private SampleService sampleService;
+    private final SampleService sampleService;
+
+    SampleController(SampleService sampleService) {
+        this.sampleService = sampleService;
+    }
 
     @PostMapping
     public ResponseEntity<Sample> createSample(@RequestBody Sample sample) {

@@ -2,7 +2,6 @@ package com.dumij.biovault.controller;
 
 import com.dumij.biovault.dto.SequenceTypeDTO;
 import com.dumij.biovault.service.SequenceTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class SequenceTypeController {
 
-    @Autowired
-    private SequenceTypeService service;
+    private final SequenceTypeService service;
+
+    SequenceTypeController(SequenceTypeService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<List<SequenceTypeDTO>> getAll() {

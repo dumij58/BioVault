@@ -1,6 +1,6 @@
 package com.dumij.biovault.config;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -35,6 +35,4 @@ public class SpringConfiguration implements WebMvcConfigurer {
                     }
                 });
     }
-
-    // ❌ DO NOT add addCorsMappings() here – it's now handled by SecurityConfig
 }

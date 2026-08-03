@@ -3,7 +3,6 @@ package com.dumij.biovault.service;
 import com.dumij.biovault.dto.SequenceTypeDTO;
 import com.dumij.biovault.model.SequenceType;
 import com.dumij.biovault.repository.SequenceTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.stream.Collectors;
 @Service
 public class SequenceTypeService {
 
-    @Autowired
-    private SequenceTypeRepository repository;
+    private final SequenceTypeRepository repository;
+
+    SequenceTypeService(SequenceTypeRepository repository) {
+        this.repository = repository;
+    }
 
     public List<SequenceTypeDTO> getAllTypes() {
         return repository.findAll().stream()
