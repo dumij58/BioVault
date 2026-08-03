@@ -107,7 +107,7 @@ const ResearchProjectPage = ({ onGoHome }) => {
                                 >
                                     ← Back to Home
                                 </button>
-                                <h1 className="research-projects-title">Research Projects</h1>
+
                             </div>
                             <button
                                 onClick={handleCreate}

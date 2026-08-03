@@ -152,6 +152,7 @@ export function App() {
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
             onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
             onLogout={handleLogout}
           />
         )}

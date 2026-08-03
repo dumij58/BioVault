@@ -8,7 +8,7 @@ import {
 } from '../service/sampleApi';
 import './SampleList.css'; // Import the CSS below
 
-export const SampleList = () => {
+export const SampleList = ({ onGoHome }) => {
     const [samples, setSamples] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
@@ -75,6 +75,15 @@ export const SampleList = () => {
                         Register, view, and manage biological samples collected during research.
                     </p>
                 </div>
+                {onGoHome && (
+                    <button
+                        type="button"
+                        className="back-btn"
+                        onClick={onGoHome}
+                    >
+                        ← Back to Home
+                    </button>
+                )}
             </header>
 
             {/* Form Section */}
