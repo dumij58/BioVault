@@ -1,16 +1,12 @@
 import { Env } from "../config/Env";
+import { getAuthHeader } from "./authHeader";
 
 const API_URL = Env.API_BASE_URL + "/storage-locations";
-
-const authHeader = {
-    "Authorization": "Basic " + btoa("admin:admin123"),
-    "Content-Type": "application/json"
-};
 
 export const getStorageLocations = async () => {
 
     const response = await fetch(API_URL,{
-        headers: authHeader
+        headers: getAuthHeader()
     });
 
     return response.json();
@@ -20,6 +16,7 @@ export const updateStorageLocation = async(id, location)=>{
     const response = await fetch(`${API_URL}/${id}`,{
         method:"PUT",
         headers:{
+            ...getAuthHeader(),
             "Content-Type":"application/json"
         },
         body:JSON.stringify(location)
@@ -32,7 +29,10 @@ export const createStorageLocation = async(location)=>{
 
     const response = await fetch(API_URL,{
         method:"POST",
-        headers: authHeader,
+        headers: {
+            ...getAuthHeader(),
+            "Content-Type":"application/json"
+        },
         body:JSON.stringify(location)
     });
 
@@ -46,7 +46,7 @@ export const deleteStorageLocation = async(id)=>{
 
     await fetch(`${API_URL}/${id}`,{
         method:"DELETE",
-        headers:authHeader
+        headers: getAuthHeader()
     });
 
 };

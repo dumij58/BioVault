@@ -8,11 +8,17 @@ import InstitutionManagement from '../pages/InstitutionManagement'
 import StorageLocation from "../pages/storageLocation"
 import ResearchProjectPage from "../pages/ResearchProjectPage"
 import SequenceTypePage from "../pages/SequenceTypePage"
+import ResearcherDashboard from '../pages/ResearcherDashboard'
+import AdminDashboard from '../pages/AdminDashboard'
+import { useAuth } from '../context/AuthContext'
 
 export function App() {
-  const [page, setPage] = useState('home');
-  // Tracks who is active inside the system ('admin' or 'researcher')
-  const [userRole, setUserRole] = useState('researcher'); 
+  const { user, logout } = useAuth();
+  const [page, setPage] = useState(() => {
+    if (user?.role === 'ADMIN') return 'adminDashboard';
+    if (user?.role === 'RESEARCHER') return 'researcherDashboard';
+    return 'home';
+  });
 
   const navigateTo = (nextPage) => {
     if (nextPage === page) {
@@ -21,14 +27,12 @@ export function App() {
     setPage(nextPage);
   };
 
-  // Called automatically when credentials match in your corrected Auth.jsx page
-  const handleLoginSuccess = (roleFromDatabase) => {
-    setUserRole(roleFromDatabase); // Lock session clearance level context
-    navigateTo('dashboard');      // Direct route straight into the interactive dashboard workspace
+  const handleLoginSuccess = (loggedInUser) => {
+    navigateTo(loggedInUser.role === 'ADMIN' ? 'adminDashboard' : 'researcherDashboard');
   };
 
   const handleLogout = () => {
-    setUserRole('guest');
+    logout();
     navigateTo('home');
   };
 
@@ -59,10 +63,9 @@ export function App() {
         )}
         {page === 'auth' && (
           <Auth
-            onLoginSuccess={handleLoginSuccess}
             onGoHome={() => navigateTo('home')}
             onGoRegistration={() => navigateTo('registration')}
-            onGoSequence={() => navigateTo('sequence')}
+            onLoginSuccess={handleLoginSuccess}
           />
         )}
         {page === 'registration' && (
@@ -102,6 +105,24 @@ export function App() {
             />
         )}
         
+        {page === 'researcherDashboard' && (
+          <ResearcherDashboard
+            onProjectsClick={() => navigateTo('projects')}
+            onSequenceClick={() => navigateTo('sequence')}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onLogout={handleLogout}
+          />
+        )}
+
+        {page === 'adminDashboard' && (
+          <AdminDashboard
+            onInstitutionsClick={() => navigateTo('institutions')}
+            onProjectsClick={() => navigateTo('projects')}
+            onSequenceClick={() => navigateTo('sequence')}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onLogout={handleLogout}
+          />
+        )}
       </main>
     </div>
   );

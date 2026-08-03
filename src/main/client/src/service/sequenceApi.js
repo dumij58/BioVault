@@ -1,9 +1,6 @@
 import { Env } from "../config/Env";
 import { parsePingResponse } from "../models/ping";
-
-const authHeader = {
-    "Authorization": "Basic " + btoa("admin:admin123"),
-};
+import { getAuthHeader } from "./authHeader";
 
 export async function pingApi() {
     const response = await fetch(`${Env.API_BASE_URL}/ping`);
@@ -27,7 +24,7 @@ async function parseJsonResponse(response, fallbackMessage) {
 
 export async function listSequencesApi() {
     const response = await fetch(`${sequenceBaseUrl}/getall`, {
-        headers: authHeader
+        headers: getAuthHeader()
     });
     return parseJsonResponse(response, "Failed to fetch sequences");
 }
@@ -36,7 +33,7 @@ export async function saveSequenceApi(name, sequence, seqLength = null, seqType 
     const response = await fetch(`${sequenceBaseUrl}/save`, {
         method: "POST",
         headers: {
-            authHeader,
+            ...getAuthHeader(),
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, sequence, seqLength, seqType }),
@@ -49,7 +46,7 @@ export async function updateSequenceApi(id, name, sequence, seqLength = null, se
     const response = await fetch(`${sequenceBaseUrl}/update/${id}`, {
         method: "PUT",
         headers: {
-            authHeader,
+            ...getAuthHeader(),
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, sequence, seqLength, seqType }),
@@ -62,7 +59,7 @@ export async function calcSequenceLengthApi(sequence, seqLength = null) {
     const response = await fetch(`${sequenceBaseUrl}/calclength`, {
         method: "POST",
         headers: {
-            authHeader,
+            ...getAuthHeader(),
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ sequence, seqLength }),
@@ -73,7 +70,7 @@ export async function calcSequenceLengthApi(sequence, seqLength = null) {
 
 export async function getSequenceByIdApi(id) {
     const response = await fetch(`${sequenceBaseUrl}/${id}`, {
-        headers: authHeader
+        headers: getAuthHeader()
     });
     return parseJsonResponse(response, "Failed to load sequence details");
 }
@@ -81,7 +78,7 @@ export async function getSequenceByIdApi(id) {
 export async function deleteSequenceApi(id) {
     const response = await fetch(`${sequenceBaseUrl}/delete/${id}`, {
         method: "DELETE",
-        headers: authHeader
+        headers: getAuthHeader()
     });
 
     if (!response.ok) {

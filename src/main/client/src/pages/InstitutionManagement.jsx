@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Env } from "../config/Env";
+import { getAuthHeader } from "../service/authHeader";
 
 const API_URL = Env.API_BASE_URL + "/institutions";
 
 export default function InstitutionManagement({ onGoHome }) {
     const [institutions, setInstitutions] = useState([]);
+    const [accessDenied, setAccessDenied] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         country: '',
@@ -15,7 +17,11 @@ export default function InstitutionManagement({ onGoHome }) {
     // READ
     const fetchInstitutions = async () => {
         try {
-            const response = await fetch(API_URL);
+            const response = await fetch(API_URL, { headers: getAuthHeader() });
+            if (response.status === 403) {
+                setAccessDenied(true);
+                return;
+            }
             if (response.ok) {
                 const data = await response.json();
                 setInstitutions(data);
@@ -40,7 +46,7 @@ export default function InstitutionManagement({ onGoHome }) {
         try {
             const response = await fetch(API_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { ...getAuthHeader(), 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             if (response.ok) {
@@ -56,7 +62,8 @@ export default function InstitutionManagement({ onGoHome }) {
     const handleDelete = async (id) => {
         try {
             const response = await fetch(`${API_URL}/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: getAuthHeader()
             });
             if (response.ok) {
                 fetchInstitutions();
@@ -65,6 +72,16 @@ export default function InstitutionManagement({ onGoHome }) {
             console.error("Error deleting institution:", error);
         }
     };
+
+    if (accessDenied) {
+        return (
+            <div style={{ padding: '30px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'sans-serif', color: '#f3f4f6' }}>
+                <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', color: '#ffffff' }}>Access Denied</h2>
+                <p style={{ color: '#94a3b8' }}>You must be logged in as an administrator to manage institutions.</p>
+                <button className="back-btn" onClick={onGoHome}>← Back to Home</button>
+            </div>
+        );
+    }
 
     return (
         <div style={{ padding: '30px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'sans-serif', color: '#f3f4f6' }}>

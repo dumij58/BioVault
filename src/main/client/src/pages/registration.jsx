@@ -1,13 +1,40 @@
 import { useState } from 'react';
 import './registration.css';
+import { registerApi } from '../service/authApi';
 
 
 function Registration({ onGoHome, onGoLogin }) {
-    
-    const handleRegister = (e) => {
+    const [form, setForm] = useState({
+        name: '', email: '', password: '', confirmPassword: '', department: '', designation: ''
+    });
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleRegister = async (e) => {
         e.preventDefault();
-        alert('Registration Successful! Redirecting to login.');
-        if (onGoLogin) onGoLogin();
+        setErrorMessage('');
+
+        if (form.password !== form.confirmPassword) {
+            setErrorMessage('Passwords do not match.');
+            return;
+        }
+
+        try {
+            await registerApi({
+                name: form.name,
+                email: form.email,
+                password: form.password,
+                department: form.department,
+                designation: form.designation,
+            });
+            alert('Registration Successful! Redirecting to login.');
+            if (onGoLogin) onGoLogin();
+        } catch (error) {
+            setErrorMessage(error.message || 'Registration failed. Please try again.');
+        }
     };
 
     return (
@@ -15,22 +42,46 @@ function Registration({ onGoHome, onGoLogin }) {
             <h1 className='form-title'>Registration</h1>
             <div className='Reg_container'>
                 <form onSubmit={handleRegister} className='reg-form'>
+                    {errorMessage ? <p className="error-message" role="alert">{errorMessage}</p> : null}
                     <div className='input-wrapper'>
-                        <input type='text' className='input-field' placeholder='Full Name' required />
+                        <input type='text' name='name' className='input-field' placeholder='Full Name' value={form.name} onChange={handleChange} required />
                         <i className="material-symbols-outlined">person</i>
                     </div>
                     <div className='input-wrapper'>
-                        <input type='email' className='input-field' placeholder='Email' required />
+                        <input type='email' name='email' className='input-field' placeholder='Email' value={form.email} onChange={handleChange} required />
                         <i className="material-symbols-outlined">mail</i>
                     </div>
                     <div className='input-wrapper'>
-                        <input type='password' className='input-field' placeholder='Password' required />
+                        <input type='password' name='password' className='input-field' placeholder='Password' value={form.password} onChange={handleChange} minLength={8} required />
                         <i className="material-symbols-outlined">lock</i>
                     </div>
                     <div className='input-wrapper'>
-                        <input type='password' className='input-field' placeholder='Confirm Password' required />
+                        <input type='password' name='confirmPassword' className='input-field' placeholder='Confirm Password' value={form.confirmPassword} onChange={handleChange} minLength={8} required />
                         <i className="material-symbols-outlined">lock_reset</i>
                     </div>
+                    <div className='input-wrapper'>
+                        <select name="department" id="department" className='input-field select-field' value={form.department} onChange={handleChange} required>
+                            <option value="" disabled hidden>Select Department</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="math">Mathematics</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                        </select>
+                        <i className="material-symbols-outlined">apartment</i>
+                    </div>
+
+                    <div className='input-wrapper'>
+                        <select name="designation" id="designation" className='input-field select-field' value={form.designation} onChange={handleChange} required>
+                            <option value="" disabled hidden>Select Designation</option>
+                            <option value="Professor">Professor</option>
+                            <option value="lecturer">Senior Lecturer / Lecturer</option>
+                            <option value="postdoctoral_researcher">Postdoctoral Researcher</option>
+                            <option value="research_assistant">Research Assistant</option>
+                            <option value="graduate_undergraduate_researcher">Graduate / Undergraduate Researcher</option>
+                        </select>
+                        <i className="material-symbols-outlined">work</i>
+                    </div>
+
                     <button type='submit' className='reg-button'>Register</button>
                 </form>
             </div>

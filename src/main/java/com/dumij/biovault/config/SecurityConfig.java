@@ -3,11 +3,13 @@ package com.dumij.biovault.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -27,9 +29,23 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                     .requestMatchers("/api/v1/institutions/**").hasRole("ADMIN")
                     .requestMatchers("/api/v1/researchers/**").hasRole("ADMIN")
-                    .anyRequest().authenticated())
-            .httpBasic(Customizer.withDefaults());
+                    .requestMatchers("/api/**").authenticated()
+                    // Let the React SPA (index.html, JS/CSS bundles, client-side routes
+                    // like /login and /register) load without triggering the browser's
+                    // native Basic Auth popup. Only /api/** endpoints require credentials.
+                    .anyRequest().permitAll())
+            // No WWW-Authenticate header on 401s, so browsers don't show their own login dialog.
+            .httpBasic(basic -> basic.authenticationEntryPoint(restAuthenticationEntryPoint()));
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint restAuthenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{\"message\":\"Invalid email or password\"}");
+        };
     }
 
 
