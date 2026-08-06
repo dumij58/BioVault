@@ -1,7 +1,8 @@
 package com.dumij.biovault.service;
 
-import com.dumij.biovault.dto.PingResponse;
 import org.springframework.stereotype.Service;
+
+import com.dumij.biovault.dto.PingResponse;
 
 @Service
 public class DefaultPingService implements PingService {

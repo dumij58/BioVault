@@ -1,0 +1,95 @@
+import { Env } from "../config/Env";
+import { parsePingResponse } from "../models/ping";
+import { getAuthHeader } from "./authHeader";
+
+export async function pingApi() {
+    const response = await fetch(`${Env.API_BASE_URL}/ping`);
+    if (!response.ok) {
+        throw new Error(`Ping request failed with status ${response.status}`);
+    }
+    const payload = await response.json();
+    return parsePingResponse(payload);
+}
+
+const sequenceBaseUrl = `${Env.API_BASE_URL}/sequence`;
+const sequenceTypeBaseUrl = `${Env.API_BASE_URL}/sequencetype`;
+const sampleBaseUrl = `${Env.API_BASE_URL}/samples`;
+
+async function parseJsonResponse(response, fallbackMessage) {
+    if (!response.ok) {
+        throw new Error(`${fallbackMessage} (status ${response.status})`);
+    }
+
+    return response.json();
+}
+
+export async function listSequencesApi() {
+    const response = await fetch(`${sequenceBaseUrl}/getall`, {
+        headers: getAuthHeader()
+    });
+    return parseJsonResponse(response, "Failed to fetch sequences");
+}
+
+export async function saveSequenceApi(name, sequence, seqLength = null, seqTypeId = null, sampleId = null) {
+    const response = await fetch(`${sequenceBaseUrl}/save`, {
+        method: "POST",
+        headers: {
+            ...getAuthHeader(),
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, sequence, seqLength, seqTypeId, sampleId }),
+    });
+
+    return parseJsonResponse(response, "Failed to save sequence");
+}
+
+export async function updateSequenceApi(id, name, sequence, seqLength = null, seqTypeId = null, sampleId = null) {
+    const response = await fetch(`${sequenceBaseUrl}/update/${id}`, {
+        method: "PUT",
+        headers: {
+            ...getAuthHeader(),
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, sequence, seqLength, seqTypeId, sampleId }),
+    });
+
+    return parseJsonResponse(response, "Failed to update sequence");
+}
+
+export async function calcSequenceLengthApi(sequence, seqLength = null) {
+    const response = await fetch(`${sequenceBaseUrl}/calclength`, {
+        method: "POST",
+        headers: {
+            ...getAuthHeader(),
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sequence, seqLength }),
+    });
+
+    return parseJsonResponse(response, "Failed to calculate sequence length");
+}
+
+export async function getSequenceByIdApi(id) {
+    const response = await fetch(`${sequenceBaseUrl}/${id}`, {
+        headers: getAuthHeader()
+    });
+    return parseJsonResponse(response, "Failed to load sequence details");
+}
+
+export async function deleteSequenceApi(id) {
+    const response = await fetch(`${sequenceBaseUrl}/delete/${id}`, {
+        method: "DELETE",
+        headers: getAuthHeader()
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to delete sequence (status ${response.status})`);
+    }
+}
+
+export async function listSamplesApi() {
+    const response = await fetch(sampleBaseUrl, {
+        headers: getAuthHeader()
+    });
+    return parseJsonResponse(response, "Failed to fetch samples");
+}

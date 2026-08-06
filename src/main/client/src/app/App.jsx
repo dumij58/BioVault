@@ -1,34 +1,88 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Home from '../pages/home'
 import Auth from '../pages/auth'
 import Registration from '../pages/registration'
+import Sequence from '../pages/sequence'
+import InstitutionManagement from '../pages/InstitutionManagement'
+import StorageLocation from "../pages/storageLocation"
+import ResearchProjectPage from "../pages/ResearchProjectPage"
+import AddProjectPage from "../pages/AddProjectPage"
+import SequenceTypePage from "../pages/SequenceTypePage"
+import ResearcherDashboard from '../pages/ResearcherDashboard'
+import AdminDashboard from '../pages/AdminDashboard'
+import SampleList from '../pages/SampleList'
+import ResearcherManagement from '../pages/ResearcherManagement'
+import { useAuth } from '../context/AuthContext'
 
+const normalizeRole = (role) => {
+  if (!role) return '';
+  if (typeof role === 'string') return role.toUpperCase();
+  if (typeof role === 'object') {
+    if (typeof role.name === 'string') return role.name.toUpperCase();
+    if (typeof role.role === 'string') return role.role.toUpperCase();
+  }
+  return String(role).toUpperCase();
+};
+
+const getPageForRole = (role) => {
+  const normalizedRole = normalizeRole(role);
+  if (normalizedRole === 'ADMIN') return 'adminDashboard';
+  if (normalizedRole === 'RESEARCHER') return 'researcherDashboard';
+  return 'home';
+};
 
 export function App() {
-  const [page, setPage] = useState('home');
+  const { user, logout } = useAuth();
+  const [page, setPage] = useState(() => getPageForRole(user?.role));
+
+  useEffect(() => {
+    setPage(getPageForRole(user?.role));
+  }, [user?.role]);
 
   const navigateTo = (nextPage) => {
     if (nextPage === page) {
       return;
     }
-
     setPage(nextPage);
+  };
+
+  const navigateBack = () => {
+    const pageForRole = getPageForRole(user?.role);
+    if (pageForRole !== 'home') return navigateTo(pageForRole);
+    navigateTo('home');
+  };
+
+  const handleLoginSuccess = (loggedInUser) => {
+    navigateTo(getPageForRole(loggedInUser.role));
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigateTo('home');
   };
 
   return (
     <div className="app-shell">
       <main className={`page-shell page-shell--${page}`}>
+
         {page === 'home' && (
           <Home
             onLoginClick={() => navigateTo('auth')}
             onRegisterClick={() => navigateTo('registration')}
+            onSequenceClick={() => navigateTo('sequence')}
+            onInstitutionsClick={() => navigateTo("institutions")}
+            onProjectsClick={() => navigateTo("projects")}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
           />
         )}
         {page === 'auth' && (
           <Auth
             onGoHome={() => navigateTo('home')}
             onGoRegistration={() => navigateTo('registration')}
+            onLoginSuccess={handleLoginSuccess}
           />
         )}
         {page === 'registration' && (
@@ -38,6 +92,79 @@ export function App() {
           />
         )}
         
+        {page === 'sequence' && (
+          <Sequence
+            onGoHome={navigateBack}
+          />
+        )}
+
+        {page === 'institutions' && (
+          <InstitutionManagement 
+            onGoHome={navigateBack}
+          />
+        )}
+
+        {page === 'researchers' && (
+          <ResearcherManagement
+            onGoHome={navigateBack}
+          />
+        )}
+
+        {page === 'projects' && (
+          <ResearchProjectPage
+            onGoHome={navigateBack}
+          />
+        )}
+
+        {page === 'addProject' && (
+          <AddProjectPage
+            onGoBack={navigateBack}
+          />
+        )}
+        
+        {page === 'storageLocation' && (
+          <StorageLocation
+            onGoHome={navigateBack}
+          />
+        )}
+        
+        {page === 'sequenceType' && (
+            <SequenceTypePage
+                onGoHome={navigateBack}
+            />
+        )}
+        
+        {page === 'researcherDashboard' && (
+          <ResearcherDashboard
+            onProjectsClick={() => navigateTo('projects')}
+            onAddProjectClick={() => navigateTo('addProject')}
+            onSequenceClick={() => navigateTo('sequence')}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
+            onResearchersClick={() => navigateTo('researchers')}
+            onLogout={handleLogout}
+          />
+        )}
+
+        {page === 'samples' && (
+          <SampleList
+            onGoHome={navigateBack}
+          />
+        )}
+
+        {page === 'adminDashboard' && (
+          <AdminDashboard
+            onInstitutionsClick={() => navigateTo('institutions')}
+            onResearchersClick={() => navigateTo('researchers')}
+            onProjectsClick={() => navigateTo('projects')}
+            onSequenceClick={() => navigateTo('sequence')}
+            onStorageClick={() => navigateTo('storageLocation')}
+            onSequenceTypeClick={() => navigateTo('sequenceType')}
+            onSampleListClick={() => navigateTo('samples')}
+            onLogout={handleLogout}
+          />
+        )}
       </main>
     </div>
   );

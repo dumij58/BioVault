@@ -2,51 +2,66 @@ package com.dumij.biovault.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.config.Customizer;
 
 @Configuration
-@EnableMethodSecurity
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf((AbstractHttpConfigurer::disable))
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                    .requestMatchers("/api/v1/institutions/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/researchers/**").authenticated()
+                    .requestMatchers("/api/v1/researchers/**").hasRole("ADMIN")
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().permitAll())
+            .httpBasic(basic -> basic.authenticationEntryPoint(restAuthenticationEntryPoint()));
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        var userDetailsManager = new InMemoryUserDetailsManager();
-        var user = User.withUsername("user")
-                .password(passwordEncoder().encode("user123"))
-                .roles("USER")
-                .build();
-
-        var admin = User.withUsername("admin")
-                .password(passwordEncoder().encode("admin123"))
-                .roles("ADMIN")
-                .build();
-
-        userDetailsManager.createUser(user);
-        userDetailsManager.createUser(admin);
-
-        return userDetailsManager;
+    public AuthenticationEntryPoint restAuthenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setStatus(jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{\"message\":\"Invalid email or password\"}");
+        };
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.addAllowedOriginPattern("*");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
+
+        source.registerCorsConfiguration("/api/**", config);
+        return new CorsFilter(source);
     }
 }
