@@ -64,3 +64,13 @@ To build the production version of the application, run (from `BioVault/src/main
    ```
    - This will make your frontend available at `http://localhost:8080/`.
    - And you can access the backend at `http://localhost:8080/api/v1/`.
+
+---
+
+## Documentation
+
+- **API Documentation:** Full REST API specification, request/response models, and role permissions are available in [API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md).
+- **Sample Data & Workflow Guide:** Realistic sample payloads for all endpoints and a step-by-step project creation workflow using Sri Lankan research contexts are available in [SAMPLE_DATA.md](docs/SAMPLE_DATA.md).
+
+
+

@@ -3,7 +3,7 @@ import './home.css';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 
-function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick, onSampleListClick }) {
+function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick, onStorageClick, onLogout, onSequenceTypeClick, onSampleListClick, onResearchersClick }) {
     const { user } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [currentView, setCurrentView] = useState('overview');
@@ -12,15 +12,12 @@ function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick,
         setCurrentView(viewId);
 
         if (viewId === 'institutions') onInstitutionsClick?.();
+        if (viewId === 'researchers') onResearchersClick?.();
         if (viewId === 'projects') onProjectsClick?.();
         if (viewId === 'sequence') onSequenceClick?.();
         if (viewId === 'storage') onStorageClick?.();
         if (viewId === 'samples' || viewId === 'sampleList') onSampleListClick?.();
         if (viewId === 'sequence-types' || viewId === 'seq-types') onSequenceTypeClick?.();
-    };
-
-    const handleRoleSwitch = (newRole) => {
-        console.log(`Switching session authorization layer context to: ${newRole}`);
     };
 
     return (
@@ -30,7 +27,6 @@ function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick,
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
                 currentRole="admin"
-                onRoleSwitch={handleRoleSwitch}
                 currentView={currentView}
                 onViewChange={handleViewChange}
                 onLogout={onLogout}
@@ -69,6 +65,7 @@ function AdminDashboard({ onInstitutionsClick, onProjectsClick, onSequenceClick,
                     </p>
                     <div className="home__cta-row">
                         <button type="button" className="home__primary-button" onClick={onInstitutionsClick}>Institutions</button>
+                        <button type="button" className="home__ghost-button" onClick={onResearchersClick}>Researchers</button>
                         <button type="button" className="home__ghost-button" onClick={onProjectsClick}>Projects</button>
                         <button type="button" className="home__ghost-button" onClick={onSampleListClick}>Samples</button>
                         <button type="button" className="home__ghost-button" onClick={onSequenceClick}>Sequences</button>

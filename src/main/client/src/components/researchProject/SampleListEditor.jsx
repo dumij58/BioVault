@@ -8,6 +8,7 @@ const createEmptySample = () => ({
     sampleType: '',
     collectionDate: '',
     storageLocationId: '',
+    storageLocation: '',
 });
 
 const SampleListEditor = ({ samples, onChange, storageLocations = [] }) => {
@@ -20,7 +21,15 @@ const SampleListEditor = ({ samples, onChange, storageLocations = [] }) => {
     };
 
     const handleFieldChange = (index, field, value) => {
-        onChange(samples.map((sample, i) => (i === index ? { ...sample, [field]: value } : sample)));
+        onChange(samples.map((sample, i) => {
+            if (i === index) {
+                if (field === 'storageLocationId') {
+                    return { ...sample, storageLocationId: value, storageLocation: value };
+                }
+                return { ...sample, [field]: value };
+            }
+            return sample;
+        }));
     };
 
     return (
@@ -75,15 +84,18 @@ const SampleListEditor = ({ samples, onChange, storageLocations = [] }) => {
                             <label className="form-label">Storage Location</label>
                             <select
                                 className="form-input"
-                                value={sample.storageLocationId}
+                                value={sample.storageLocationId || sample.storageLocation || ''}
                                 onChange={(e) => handleFieldChange(index, 'storageLocationId', e.target.value)}
                             >
                                 <option value="">-- Select Storage Location --</option>
-                                {storageLocations.map((location) => (
-                                    <option key={location.id} value={location.id}>
-                                        {location.storageId || location.id}
-                                    </option>
-                                ))}
+                                {storageLocations.map((location) => {
+                                    const displayId = location.storageId || location.id;
+                                    return (
+                                        <option key={location.id} value={displayId}>
+                                            {displayId}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ import SequenceTypePage from "../pages/SequenceTypePage"
 import ResearcherDashboard from '../pages/ResearcherDashboard'
 import AdminDashboard from '../pages/AdminDashboard'
 import SampleList from '../pages/SampleList'
+import ResearcherManagement from '../pages/ResearcherManagement'
 import { useAuth } from '../context/AuthContext'
 
 const normalizeRole = (role) => {
@@ -103,6 +104,12 @@ export function App() {
           />
         )}
 
+        {page === 'researchers' && (
+          <ResearcherManagement
+            onGoHome={navigateBack}
+          />
+        )}
+
         {page === 'projects' && (
           <ResearchProjectPage
             onGoHome={navigateBack}
@@ -135,6 +142,7 @@ export function App() {
             onStorageClick={() => navigateTo('storageLocation')}
             onSequenceTypeClick={() => navigateTo('sequenceType')}
             onSampleListClick={() => navigateTo('samples')}
+            onResearchersClick={() => navigateTo('researchers')}
             onLogout={handleLogout}
           />
         )}
@@ -148,6 +156,7 @@ export function App() {
         {page === 'adminDashboard' && (
           <AdminDashboard
             onInstitutionsClick={() => navigateTo('institutions')}
+            onResearchersClick={() => navigateTo('researchers')}
             onProjectsClick={() => navigateTo('projects')}
             onSequenceClick={() => navigateTo('sequence')}
             onStorageClick={() => navigateTo('storageLocation')}
